@@ -1,0 +1,56 @@
+@startuml Assignment 1
+
+skinparam classAttributeIconSize 0
+
+class ArgumentParser {
+  -inputFileName: String
+  -stopWordsFileName: String
+  +ArgumentParser(args: String[])
+  -validate(): void
+  -printHelp(): void
+  +getInputFileName(): String
+  +hasStopWords(): Boolean
+  +getStopWordsFileName(): String
+}
+
+class Input {
+  -inputFile: File
+  +Input(inputFileName: String)
+  +readlines(): String[]
+}
+
+class Output {
+  +{static} print(lineStorage: LineStorage): void
+}
+Output --> LineStorage
+
+class LineStorage {
+  -lines: String[]
+  +LineStorage()
+  +LineStorage(lines: String[])
+  +addLine(line: String): void
+  +getLines(): String[]
+  +setLines(lines: String[]): void
+}
+
+class CircularShift {
+  +{static} shift(lineStorage: LineStorage): void
+}
+CircularShift --> LineStorage
+
+class Alphabetizer {
+  +{static} sort(lineStorage: LineStorage): void
+}
+Alphabetizer --> LineStorage
+
+class MasterController {
+  +{static} main(args: String[]): void
+}
+MasterController --> ArgumentParser
+MasterController --> Input
+MasterController --> Output
+MasterController --> LineStorage
+MasterController --> CircularShift
+MasterController --> Alphabetizer
+
+@enduml
