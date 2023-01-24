@@ -1,9 +1,10 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Input {
-    private File inputFile;
+    private final File inputFile;
     public Input(String filename) throws FileNotFoundException {
         inputFile = new File(filename);
         // If file does not exist, throw exception "Error: The file ${filename} does not exist"
@@ -12,12 +13,18 @@ public class Input {
         }
     }
 
-    public void addLines(LineStorage lineStorage) throws FileNotFoundException {
+    public ArrayList<String> readlines() throws FileNotFoundException {
         // Read lines from input file and add lines to lineStorage
         Scanner scanner = new Scanner(inputFile);
+        ArrayList<String> lines = new ArrayList<>();
+        String line;
         while (scanner.hasNextLine()) {
-            lineStorage.addLine(scanner.nextLine());
+            line = scanner.nextLine().trim();
+            // If line is not empty, add it to the list
+            if (!line.equals("")) {
+                lines.add(line);
+            }
         }
+        return lines;
     }
-
 }

@@ -1,15 +1,23 @@
 import java.util.ArrayList;
 
 public class Output {
-    private LineStorage lineStorage;
-    public Output(LineStorage lineStorage) {
-        this.lineStorage = lineStorage;
+    public static void print(String text) {
+        System.out.println(text);
     }
 
-    public void out() {
+    public static void printLines(LineStorage lineStorage) {
         ArrayList<String> lines = lineStorage.getLines();
         for (String line : lines) {
-            System.out.println(line);
+            print(line);
         }
+    }
+
+    public static void error(String text) {
+        print("\nError: " + text);
+        System.exit(1);
+    }
+
+    public static void warn(String text) {
+        print("Warning: " + text);
     }
 }

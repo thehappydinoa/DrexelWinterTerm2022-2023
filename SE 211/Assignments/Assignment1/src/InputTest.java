@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class InputTest {
 
     @Test
-    void constructorFail() throws FileNotFoundException {
+    void constructorFail() {
         assertThrows(FileNotFoundException.class, () -> new Input("this_file_does_not_exist.txt"));
     }
 
@@ -16,7 +16,7 @@ class InputTest {
     void addLines() throws FileNotFoundException {
         LineStorage lineStorage = new LineStorage();
         Input input = new Input("input.txt");
-        input.addLines(lineStorage);
+        lineStorage.addLines(input.readlines());
         assertArrayEquals(new String[]{
                 "Sense and Sensibility",
                 "Architecture Software",
