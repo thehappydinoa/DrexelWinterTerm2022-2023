@@ -11,10 +11,11 @@ public class CircularShift {
             // Loop through each word in the line
             for (int j = 0; j < words.length; j++) {
                 // Shift the words
-                String shiftedLine = "";
+                StringBuilder shiftedLineBuilder = new StringBuilder();
                 for (int k = 0; k < words.length; k++) {
-                    shiftedLine += words[(j + k) % words.length] + " ";
+                    shiftedLineBuilder.append(words[(j + k) % words.length]).append(" ");
                 }
+                String shiftedLine = shiftedLineBuilder.toString();
                 shiftedLine = shiftedLine.trim();
                 // If the first word is a stop word, skip it
                 if (lineStorage.isStopWord(shiftedLine.split(" ")[0])) {
