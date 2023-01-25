@@ -3,9 +3,12 @@
 skinparam classAttributeIconSize 0
 
 class ArgumentParser {
+  ' Attributes
   -inputFileName: String
   -stopWordsFileName: String
+  ' Constructors
   +ArgumentParser(args: String[])
+  ' Methods
   -validate(): void
   -printHelp(): void
   +getInputFileName(): String
@@ -14,36 +17,57 @@ class ArgumentParser {
 }
 
 class Input {
+  ' Attributes
   -inputFile: File
+  ' Constructors
   +Input(inputFileName: String)
+  ' Methods
   +readlines(): String[]
 }
 
 class Output {
-  +{static} print(lineStorage: LineStorage): void
+  ' Methods
+  +{static} print(String line): void
+  +{static} printLines(lineStorage: LineStorage): void
+  +{static} error(String message): void
+  +{static} warn(String message): void
 }
 Output --> LineStorage
 
 class LineStorage {
-  -lines: String[]
+  ' Attributes
+  -lines: ArrayList<String>
+  -stopWords: ArrayList<String>
+  ' Constructors
+  +LineStorage(lines: ArrayList<String>, stopWords: ArrayList<String>)
+  +LineStorage(lines: ArrayList<String>)
   +LineStorage()
-  +LineStorage(lines: String[])
+  ' Methods
   +addLine(line: String): void
-  +getLines(): String[]
-  +setLines(lines: String[]): void
+  +addLines(lines: ArrayList<String>): void
+  +getLines(): ArrayList<String>
+  +setLines(lines: ArrayList<String>): void
+  +addStopWord(stopWord: String): void
+  +addStopWords(stopWords: ArrayList<String>): void
+  +getStopWords(): ArrayList<String>
+  +setStopWords(newStopWords: ArrayList<String>): void
+  +isStopWord(word: String): Boolean
 }
 
 class CircularShift {
+  ' Methods
   +{static} shift(lineStorage: LineStorage): void
 }
 CircularShift --> LineStorage
 
 class Alphabetizer {
+  ' Methods
   +{static} sort(lineStorage: LineStorage): void
 }
 Alphabetizer --> LineStorage
 
 class MasterController {
+  ' Methods
   +{static} main(args: String[]): void
 }
 MasterController --> ArgumentParser
