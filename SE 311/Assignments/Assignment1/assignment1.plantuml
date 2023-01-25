@@ -1,0 +1,109 @@
+@startuml SE 311 - Assignment 1
+
+title Class Diagram for KWIC Index System (Assignment 1)
+
+abstract class Input {
+  +{abstract} String read()
+}
+
+class ConsoleInput extends Input {
+  +String read()
+}
+
+class FileInput extends Input {
+  -File file
+  +FileInput(String filename)
+  +String read()
+}
+FileInput "1" o-- "1" java.io.File
+
+abstract class Output {
+  +{abstract} void write(String text)
+}
+
+class ConsoleOutput extends Output {
+  +void write(String text)
+}
+
+class FileOutput extends Output {
+  -File file
+  +FileOutput(String filename)
+  +void write(String text)
+}
+FileOutput "1" o-- "1" java.io.File
+
+class Sentence {
+  -String prefix
+  -String suffix
+  -Boolean isShifted
+  +Sentence(String prefix, String suffix, Boolean isShifted)
+  +Sentence(String prefix, String suffix)
+  +Sentence(String sentence)
+  +String getPrefix()
+  +String getSuffix()
+  +Boolean isShifted()
+  +String toString()
+}
+
+class KwicIndex {
+  -List<Sentence> sentences
+  -List<String> stopWords
+  +KwicIndex()
+  +void addSentence(Sentence sentence)
+  +void addSentences(List<Sentence> sentences)
+  +List<Sentence> getSentences()
+  +void addStopWord(String stopWord)
+  +void addStopWords(List<String> stopWords)
+  +List<String> getStopWords()
+  +void save(String filename)
+  +{static} void load(String filename)
+}
+KwicIndex --> Sentence
+
+abstract class Shifter {
+  +{abstract} void shift(KwicIndex kwicIndex)
+}
+
+class CircularShifter extends Shifter {
+  +void shift(KwicIndex kwicIndex)
+}
+CircularShifter --> KwicIndex
+
+abstract class Sorter {
+  +{abstract} void sort(KwicIndex kwicIndex)
+}
+
+class Alphabetizer extends Sorter {
+  +void sort(KwicIndex kwicIndex)
+}
+Alphabetizer --> KwicIndex
+
+class Settings {
+  -String inputType
+  -String inputFilename
+  -String outputType
+  -String outputFilename
+  -String stopWordsFilename
+  +Settings(String propertiesFilename, String defaultPropertiesFilename)
+  +Settings(String propertiesFilename)
+  +String getInputType()
+  +String getInputFilename()
+  +String getOutputType()
+  +String getOutputFilename()
+  +Boolean hasStopWords()
+  +String getStopWordsFilename()
+}
+Settings --> java.util.Properties
+Settings --> java.io.File
+
+class MasterController {
+  +{static} void main(String[] args)
+}
+MasterController --> Settings
+MasterController --> KwicIndex
+MasterController --> Input
+MasterController --> Shifter
+MasterController --> Sorter
+MasterController --> Output
+
+@enduml
