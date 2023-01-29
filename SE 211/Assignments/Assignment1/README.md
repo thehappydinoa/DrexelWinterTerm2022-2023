@@ -1,6 +1,6 @@
 # SE 211 Assignment #1
 
-## TODOs
+## Requirements
 
 - [x] Read lines from a file
 - [x] Optionally specify a file of stop words to ignore
@@ -12,3 +12,7 @@
   - [x] `Warning: The file stopwords does not exist`
   - [x] `Warning: The file stopwords is empty`
 - [x] Output like slides
+
+## UML
+
+![UML](Assignment_1_uml.png)
