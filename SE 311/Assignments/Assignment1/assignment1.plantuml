@@ -32,33 +32,31 @@ class FileOutput extends Output {
 }
 FileOutput "1" o-- "1" java.io.File
 
-class Sentence {
-  -String prefix
-  -String suffix
-  -Boolean isShifted
-  +Sentence(String prefix, String suffix, Boolean isShifted)
-  +Sentence(String prefix, String suffix)
-  +Sentence(String sentence)
-  +String getPrefix()
-  +String getSuffix()
-  +Boolean isShifted()
+class SearchResult {
+  -String searchKeyword
+  -List<String> sentences
+  +SearchResult(String searchKeyword, List<String> sentences)
+  +String getSearchKeyword()
+  +List<String> getSentences()
+  +String toString(Boolean highlight)
   +String toString()
 }
 
 class KwicIndex {
-  -List<Sentence> sentences
+  -List<String> sentences
   -List<String> stopWords
   +KwicIndex()
-  +void addSentence(Sentence sentence)
-  +void addSentences(List<Sentence> sentences)
-  +List<Sentence> getSentences()
+  +void addSentence(String sentence)
+  +void addSentences(List<String> sentences)
+  +List<String> getSentences()
+  +SearchResult search(String keyword)
   +void addStopWord(String stopWord)
   +void addStopWords(List<String> stopWords)
   +List<String> getStopWords()
   +void save(String filename)
   +{static} void load(String filename)
 }
-KwicIndex --> Sentence
+KwicIndex::search --> SearchResult
 
 abstract class Shifter {
   +{abstract} void shift(KwicIndex kwicIndex)

@@ -16,7 +16,7 @@ public class FileInput extends Input {
 
     public ArrayList<String> readlines() {
         // Read file and return lines as an array
-        ArrayList<String> lines = new ArrayList<String>();
+        ArrayList<String> lines = new ArrayList<>();
         while (scanner.hasNextLine()) {
             lines.add(scanner.nextLine());
         }

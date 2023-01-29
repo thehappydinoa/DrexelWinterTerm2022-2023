@@ -1,2 +1,3 @@
-public class Shifter {
+abstract class Shifter {
+    abstract void shift(KwicIndex kwicIndex);
 }

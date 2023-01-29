@@ -1,4 +1,3 @@
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -19,19 +18,37 @@ public class Settings {
             InputStream defaultPropertiesStream = classLoader.getResourceAsStream(defaultPropertiesFile);
             defaultProperties.load(defaultPropertiesStream);
         } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
+            ConsoleOutput.writeError("Could not load default properties file " + defaultPropertiesFile);
+            System.exit(1);
         }
         Properties properties = new Properties(defaultProperties);
         try {
             InputStream propertiesStream = classLoader.getResourceAsStream(propertiesFile);
             properties.load(propertiesStream);
         } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
+            ConsoleOutput.writeError("Could not load properties file " + propertiesFile);
+            System.exit(1);
         }
         return properties;
     }
 
     public String get(String key) {
         return properties.getProperty(key);
+    }
+
+    public String getInputType() {
+        return get("input_type");
+    }
+
+    public String getInputFilename() {
+        return get("input_filename");
+    }
+
+    public String getOutputType() {
+        return get("output_type");
+    }
+
+    public String getOutputFilename() {
+        return get("output_filename");
     }
 }

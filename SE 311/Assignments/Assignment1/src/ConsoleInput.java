@@ -7,7 +7,7 @@ public class ConsoleInput extends Input {
     // Create a read method that reads lines from the console
     public ArrayList<String> readlines() throws IOException {
         // Create a new ArrayList to store the lines
-        ArrayList<String> lines = new ArrayList<String>();
+        ArrayList<String> lines = new ArrayList<>();
         // Create a new BufferedReader to read from the console
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         // Create a new String to store the current line

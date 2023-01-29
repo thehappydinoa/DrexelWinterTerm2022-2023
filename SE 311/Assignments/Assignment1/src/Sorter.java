@@ -1,3 +1,3 @@
 abstract class Sorter {
-    abstract void sort();
+    abstract void sort(KwicIndex kwicIndex);
 }
