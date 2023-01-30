@@ -1,0 +1,220 @@
+@startuml SE 211: Assignment 2
+
+' Styles
+skinparam classAttributeIconSize 0
+
+
+' Title
+title
+SE 211: Assignment 2
+adh346
+end title
+
+' Packages
+package "CSV Library" {
+  class CSVRow
+  exception CSVParseException
+  class CSVParser
+  class CSVRowWithHeader
+  class CSVReader
+  class CSVWriter
+}
+package "CSV Library Tests" {
+  note as N
+    Test CSV Files
+    - simple.csv
+    - quotes.csv
+    - escaped_quotes.csv
+    - headers.csv
+    - headers_and_quotes.csv
+    - headers_and_escaped_quotes.csv
+  end note
+  class CSVRowTest
+  class CSVRowWithHeaderTest
+  class CSVParserTest
+  class CSVReaderTest
+  class CSVWriterTest
+}
+
+' Classes
+exception CSVParseException extends Exception {
+  ' Fields
+  -message: String
+  ' Constructors
+  +CSVParseException(String message)
+}
+
+class CSVParser {
+  ' Fields
+  -delimiter: char
+  -quote: char
+  -escape: char
+  ' Constructors
+  +CSVParser()
+  +CSVParser(char delimiter)
+  +CSVParser(char delimiter, char quote)
+  +CSVParser(char delimiter, char quote, char escape)
+  ' Methods
+  -getDelimiter(String csv): char
+  +parse(String csv): ArrayList<CSVRow>
+  -parseLine(String csv): CSVRow
+  -parseTable(String csv): CSVTable
+}
+CSVParser --> CSVParseException
+CSVParser --> CSVRow
+CSVParser --> CSVTable
+
+class CSVRow {
+  ' Fields
+  -values: ArrayList<String>
+  ' Constructors
+  +CSVRow()
+  +CSVRow(ArrayList<String> values)
+  ' Methods
+  +get(int index): String
+  +size(): int
+}
+
+class CSVRowWithHeader extends CSVRow {
+  ' Fields
+  -header: CSVRow
+  ' Constructors
+  +CSVRowWithHeader(CSVRow header, ArrayList<String> values)
+  ' Methods
+  +get(String header): String
+}
+
+class CSVTable {
+  ' Fields
+  -rows: ArrayList<CSVRow>
+  -header: CSVRow
+  ' Constructors
+  +CSVTable()
+  +CSVTable(ArrayList<CSVRow> rows)
+  +CSVTable(ArrayList<CSVRow> rows, CSVRow header)
+  ' Methods
+  +get(int index): CSVRow
+  +size(): int
+  +getHeader(): CSVRow
+  +setHeader(CSVRow header): void
+  +setHeader(ArrayList<String> header): void
+  +addRow(CSVRow row): void
+}
+
+class CSVReader {
+  ' Fields
+  -reader: BufferedReader
+  -parser: CSVParser
+  -header: CSVRow
+  ' Constructors
+  +CSVReader(String filename)
+  +CSVReader(String filename, CSVRow header)
+  +CSVReader(String filename, char delimiter)
+  +CSVReader(String filename, char delimiter, CSVRow header)
+  +CSVReader(String filename, CSVParser parser)
+  +CSVReader(String filename, CSVParser parser, CSVRow header)
+  ' Methods
+  +setHeader(CSVRow header): void
+  +setHeader(ArrayList<String> header): void
+  +read(): CSVRow
+  +readAll(): ArrayList<CSVRow>
+  +readAllWithHeader(): ArrayList<CSVRowWithHeader>
+  +readWithHeader(): CSVRowWithHeader
+  +close(): void
+}
+CSVReader --> BufferedReader
+CSVReader --> CSVParser
+CSVReader --> CSVRow
+CSVReader --> CSVRowWithHeader
+
+class CSVWriter {
+  ' Fields
+  -writer: BufferedWriter
+  -delimiter: char
+  -header: CSVRow
+  ' Constructors
+  +CSVWriter(String filename)
+  +CSVWriter(String filename, CSVRow header)
+  +CSVWriter(String filename, char delimiter)
+  +CSVWriter(String filename, char delimiter, CSVRow header)
+  ' Methods
+  +setHeader(CSVRow header): void
+  +setHeader(ArrayList<String> header): void
+  +write(CSVRow row): void
+  +writeHeader(): void
+  +writeAll(ArrayList<CSVRow> rows): void
+  +close(): void
+}
+CSVWriter --> BufferedWriter
+CSVWriter --> CSVRow
+
+' Tests
+class CSVRowTest {
+  ' Fields
+  -row: CSVRow
+  ' Constructors
+  +CSVRowTest()
+  ' Methods
+  +testGet(): void
+  +testSize(): void
+}
+CSVRowTest --> CSVRow
+
+class CSVRowWithHeaderTest {
+  ' Fields
+  -row: CSVRowWithHeader
+  ' Constructors
+  +CSVRowWithHeaderTest()
+  ' Methods
+  +testGet(): void
+}
+CSVRowWithHeaderTest --> CSVRowWithHeader
+
+class CSVParserTest {
+  ' Fields
+  -parser: CSVParser
+  ' Constructors
+  +CSVParserTest()
+  ' Methods
+  +testGetDelimiter(): void
+  +testParse(): void
+  +testFailParse(): void
+  +testParseLine(): void
+  +testParseValue(): void
+  +testParseValueWithQuotes(): void
+  +testParseValueWithEscapedQuotes(): void
+  +testParseValueWithEscapedQuotesAndDelimiter(): void
+  +testParseValueWithEscapedQuotesAndNewline(): void
+}
+CSVParserTest --> CSVParser
+
+class CSVReaderTest {
+  ' Fields
+  -reader: CSVReader
+  ' Constructors
+  +CSVReaderTest()
+  ' Methods
+  +testSetHeader(): void
+  +testRead(): void
+  +testReadAll(): void
+  +testReadAllWithHeader(): void
+  +testReadWithHeader(): void
+  +testClose(): void
+}
+CSVReaderTest --> CSVReader
+
+class CSVWriterTest {
+  ' Fields
+  -writer: CSVWriter
+  ' Constructors
+  +CSVWriterTest()
+  ' Methods
+  +testSetHeader(): void
+  +testWrite(): void
+  +testWriteHeader(): void
+  +testWriteAll(): void
+  +testClose(): void
+}
+CSVWriterTest --> CSVWriter
+
+@enduml
