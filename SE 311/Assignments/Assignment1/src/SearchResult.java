@@ -27,7 +27,13 @@ public class SearchResult {
         StringBuilder sb = new StringBuilder();
         for (String sentence : sentences) {
             if (highlight) {
-                sb.append(sentence.replace(searchKeyword, "\033[1;31m" + searchKeyword + "\033[0m"));
+                if (sentence.contains(searchKeyword)) {
+                    sb.append(sentence.replace(searchKeyword, "\033[1;31m" + searchKeyword + "\033[0m"));
+                } else if (sentence.contains(searchKeyword.toLowerCase())) {
+                    sb.append(sentence.replace(searchKeyword.toLowerCase(), "\033[1;31m" + searchKeyword.toLowerCase() + "\033[0m"));
+                } else if (sentence.contains(searchKeyword.toUpperCase())) {
+                    sb.append(sentence.replace(searchKeyword.toUpperCase(), "\033[1;31m" + searchKeyword.toUpperCase() + "\033[0m"));
+                }
             } else {
                 sb.append(sentence);
             }

@@ -26,4 +26,27 @@ public class ConsoleInput extends Input {
         // Read lines from the console and return a KwicIndex
         return new KwicIndex(readlines());
     }
+
+    public String readSearchTerm() {
+        // Prompt the user for a search term
+        System.out.print("Search term: ");
+        // Create a new BufferedReader to read from the console
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        // Create a new String to store the search term
+        String searchTerm;
+        // While the search term is null
+        while (true) {
+            try {
+                // Read the search term from the console
+                searchTerm = br.readLine();
+                // If the search term is not null
+                if (searchTerm != null) {
+                    // Return the search term
+                    return searchTerm;
+                }
+            } catch (IOException e) {
+                // Do nothing
+            }
+        }
+    }
 }

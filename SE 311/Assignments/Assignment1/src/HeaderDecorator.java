@@ -9,6 +9,6 @@ class HeaderDecorator extends SearchResult {
     @Override
     public String toString(boolean highlight) {
         // Display "[X] results are found in [Y] records"
-        return "--- Header ---\n" + searchResult.getSize() + " results are found in " + searchResult.getSentences().size() + " records\n" + searchResult.toString(highlight);
+        return searchResult.getSentences().size() + " results are found in " + searchResult.getSize() + " records\n" + searchResult.toString(highlight);
     }
 }

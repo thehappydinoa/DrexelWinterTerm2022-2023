@@ -23,7 +23,7 @@ public class FooterDecoratorTest {
 
         // Then
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        assertEquals("sentence with \033[1;31mkeyword\033[0m\n--- Footer ---\n" + date, footerDecorator.toString(true));
+        assertEquals("sentence with \033[1;31mkeyword\033[0m\nResults Retrieved: " + date, footerDecorator.toString(true));
     }
 
     @Test
@@ -33,6 +33,6 @@ public class FooterDecoratorTest {
 
         // Then
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        assertEquals("sentence with keyword\n--- Footer ---\n" + date, footerDecorator.toString());
+        assertEquals("sentence with keyword\nResults Retrieved: " + date, footerDecorator.toString());
     }
 }

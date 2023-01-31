@@ -13,6 +13,6 @@ class FooterDecorator extends SearchResult {
     public String toString(boolean highlight) {
         // Display time and date of the search
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        return searchResult.toString(highlight) + "--- Footer ---\n" + date;
+        return searchResult.toString(highlight) + "Results Retrieved: " + date;
     }
 }

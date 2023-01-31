@@ -31,6 +31,9 @@ public class CreateIndex {
             System.exit(1);
         }
         output.write(kwicIndex.getSentences());
+
+        // Print success message
+        System.out.println("Index created successfully");
     }
 
     private static Input getInput(Settings settings) {

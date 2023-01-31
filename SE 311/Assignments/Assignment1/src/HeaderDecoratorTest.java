@@ -20,7 +20,7 @@ class HeaderDecoratorTest {
         HeaderDecorator headerDecorator = new HeaderDecorator(searchResult);
 
         // Then
-        assertEquals("--- Header ---\n1 results are found in 1 records\nsentence with \033[1;31mkeyword\033[0m\n", headerDecorator.toString(true));
+        assertEquals("1 results are found in 1 records\nsentence with \033[1;31mkeyword\033[0m\n", headerDecorator.toString(true));
     }
 
     @Test
@@ -29,6 +29,6 @@ class HeaderDecoratorTest {
         HeaderDecorator headerDecorator = new HeaderDecorator(searchResult);
 
         // Then
-        assertEquals("--- Header ---\n1 results are found in 1 records\nsentence with keyword\n", headerDecorator.toString());
+        assertEquals("1 results are found in 1 records\nsentence with keyword\n", headerDecorator.toString());
     }
 }
