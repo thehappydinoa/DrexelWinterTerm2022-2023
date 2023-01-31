@@ -4,7 +4,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class ConsoleInput extends Input {
-    // Create a read method that reads lines from the console
+    public static final String INPUT_TYPE = "console";
+
     public ArrayList<String> readlines() throws IOException {
         // Create a new ArrayList to store the lines
         ArrayList<String> lines = new ArrayList<>();
@@ -19,5 +20,10 @@ public class ConsoleInput extends Input {
         }
         // Return the ArrayList as an array
         return lines;
+    }
+
+    public KwicIndex read() throws IOException {
+        // Read lines from the console and return a KwicIndex
+        return new KwicIndex(readlines());
     }
 }

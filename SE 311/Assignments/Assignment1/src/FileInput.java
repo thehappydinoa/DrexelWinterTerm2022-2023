@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileInput extends Input {
-    private String filename;
-    private File file;
-    private Scanner scanner;
+    public static final String INPUT_TYPE = "file";
+    private final String filename;
+    private final Scanner scanner;
 
     public FileInput(String filename) throws FileNotFoundException {
         this.filename = filename;
-        this.file = new File(filename);
+        File file = new File(filename);
         this.scanner = new Scanner(file);
     }
 
@@ -21,5 +21,10 @@ public class FileInput extends Input {
             lines.add(scanner.nextLine());
         }
         return lines;
+    }
+
+    public KwicIndex read() throws FileNotFoundException {
+        // Read file and return a KwicIndex
+        return KwicIndex.fromFile(filename);
     }
 }

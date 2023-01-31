@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class KwicIndex {
@@ -36,6 +37,14 @@ public class KwicIndex {
         sentences = newSentences;
     }
 
+    public ArrayList<String> getSentences() {
+        return sentences;
+    }
+
+    public int getNumSentences() {
+        return sentences.size();
+    }
+
     public void addStopWord(String stopWord) {
         stopWords.add(stopWord);
     }
@@ -44,12 +53,16 @@ public class KwicIndex {
         this.stopWords.addAll(stopWord);
     }
 
-    public ArrayList<String> getSentences() {
-        return sentences;
+    public void setStopWords(ArrayList<String> newStopWords) {
+        stopWords = newStopWords;
     }
 
     public ArrayList<String> getStopWords() {
         return stopWords;
+    }
+
+    public int getNumStopWords() {
+        return stopWords.size();
     }
 
     public Boolean isStopWord(String word) {
@@ -57,7 +70,22 @@ public class KwicIndex {
     }
 
     public void save(String filename) {
-        FileOutput fo = new FileOutput(filename);
+        // Get resources/indexes directory
+        URL rootResource = getClass().getResource("/");
+        if (rootResource == null) {
+            System.out.println("Error: Could not find root resource directory");
+            return;
+        }
+        String indexesDir = rootResource.getPath() + "indexes/";
+
+        // If the directory doesn't exist, create it
+        FileOutput.createDir(indexesDir);
+
+        // Get the full path to the index file
+        String indexDir = indexesDir + filename;
+
+        // Write the sentences to the file
+        FileOutput fo = new FileOutput(indexDir);
         fo.write(sentences);
     }
 }

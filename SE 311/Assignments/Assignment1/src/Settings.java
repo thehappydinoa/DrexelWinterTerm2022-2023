@@ -51,4 +51,16 @@ public class Settings {
     public String getOutputFilename() {
         return get("output_filename");
     }
+
+    public String getIndexFilename() {
+        return get("index_filename");
+    }
+
+    public boolean shouldAddHeader() {
+        return Boolean.parseBoolean(get("add_header"));
+    }
+
+    public boolean shouldAddFooter() {
+        return Boolean.parseBoolean(get("add_footer"));
+    }
 }

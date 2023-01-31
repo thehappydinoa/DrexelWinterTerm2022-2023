@@ -1,6 +1,14 @@
 @startuml SE 311 - Assignment 1
 
-title Class Diagram for KWIC Index System (Assignment 1)
+' Styles
+skinparam classAttributeIconSize 0
+
+' Title
+title
+  SE 311: Assignment 1
+  UML Class Diagram for KWIC Index System
+  Aidan Holland (adh346)
+end title
 
 abstract class Input {
   +{abstract} String read()
@@ -32,6 +40,20 @@ class FileOutput extends Output {
 }
 FileOutput "1" o-- "1" java.io.File
 
+class KwicIndex {
+  -List<String> sentences
+  -List<String> stopWords
+  +KwicIndex()
+  +void addSentence(String sentence)
+  +void addSentences(List<String> sentences)
+  +List<String> getSentences()
+  +void addStopWord(String stopWord)
+  +void addStopWords(List<String> stopWords)
+  +List<String> getStopWords()
+  +void save(String filename)
+  +{static} void load(String filename)
+}
+
 class SearchResult {
   -String searchKeyword
   -List<String> sentences
@@ -40,23 +62,20 @@ class SearchResult {
   +List<String> getSentences()
   +String toString(Boolean highlight)
   +String toString()
+  +void print(Boolean highlight)
+  +void print()
 }
+SearchResult --> ConsoleOutput
 
-class KwicIndex {
-  -List<String> sentences
-  -List<String> stopWords
-  +KwicIndex()
-  +void addSentence(String sentence)
-  +void addSentences(List<String> sentences)
-  +List<String> getSentences()
-  +SearchResult search(String keyword)
-  +void addStopWord(String stopWord)
-  +void addStopWords(List<String> stopWords)
-  +List<String> getStopWords()
-  +void save(String filename)
-  +{static} void load(String filename)
+abstract class SearchAlgorithm {
+  +{abstract} SearchResult search(KwicIndex kwicIndex, String keyword)
 }
-KwicIndex::search --> SearchResult
+SearchAlgorithm --> SearchResult
+SearchAlgorithm --> KwicIndex
+
+class ExactSearch extends SearchAlgorithm {
+  +SearchResult search(KwicIndex kwicIndex, String keyword)
+}
 
 abstract class Shifter {
   +{abstract} void shift(KwicIndex kwicIndex)
@@ -94,14 +113,23 @@ class Settings {
 Settings --> java.util.Properties
 Settings --> java.io.File
 
-class MasterController {
+' CLI Classes
+class CreateIndex {
   +{static} void main(String[] args)
 }
-MasterController --> Settings
-MasterController --> KwicIndex
-MasterController --> Input
-MasterController --> Shifter
-MasterController --> Sorter
-MasterController --> Output
+CreateIndex --> Settings
+CreateIndex --> KwicIndex
+CreateIndex --> Input
+CreateIndex --> Shifter
+CreateIndex --> Sorter
+CreateIndex --> Output
+
+class SearchIndex {
+  +{static} void main(String[] args)
+}
+SearchIndex --> Settings
+SearchIndex --> KwicIndex
+SearchIndex --> Input
+SearchIndex --> Output
 
 @enduml

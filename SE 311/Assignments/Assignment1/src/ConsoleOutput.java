@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class ConsoleOutput extends Output {
+    public static final String OUTPUT_TYPE = "console";
     public void write(String s) {
         System.out.println(s);
     }
