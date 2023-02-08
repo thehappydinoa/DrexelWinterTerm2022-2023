@@ -7,15 +7,16 @@ skinparam classAttributeIconSize 0
 ' Title
 title
 SE 211: Assignment 2
-adh346
+Aidan Holland (adh346)
 end title
 
 ' Packages
 package "CSV Library" {
-  class CSVRow
-  exception CSVParseException
   class CSVParser
-  class CSVRowWithHeader
+  exception CSVParseException
+  class CSVRow
+  class CSVRowWithHeaders
+  class CSVTable
   class CSVReader
   class CSVWriter
 }
@@ -29,15 +30,16 @@ package "CSV Library Tests" {
     - headers_and_quotes.csv
     - headers_and_escaped_quotes.csv
   end note
-  class CSVRowTest
-  class CSVRowWithHeaderTest
   class CSVParserTest
+  class CSVRowTest
+  class CSVRowWithHeadersTest
+  class CSVTableTest
   class CSVReaderTest
   class CSVWriterTest
 }
 
 ' Classes
-exception CSVParseException extends Exception {
+exception CSVParseException extends java.lang.Exception {
   ' Fields
   -message: String
   ' Constructors
@@ -45,20 +47,33 @@ exception CSVParseException extends Exception {
 }
 
 class CSVParser {
+  ' Constants
+  +{static}DEFAULT_DELIMITER: char = ','
+  +{static}DEFAULT_QUOTE: char = '"'
+  +{static}DEFAULT_ESCAPE: char = '\\'
+  +{static}DEFAULT_HAS_HEADERS: boolean = false
   ' Fields
   -delimiter: char
   -quote: char
   -escape: char
+  -hasHeaders: boolean
   ' Constructors
   +CSVParser()
   +CSVParser(char delimiter)
   +CSVParser(char delimiter, char quote)
   +CSVParser(char delimiter, char quote, char escape)
+  +CSVParser(char delimiter, char quote, char escape, boolean hasHeaders)
   ' Methods
-  -getDelimiter(String csv): char
-  +parse(String csv): ArrayList<CSVRow>
-  -parseLine(String csv): CSVRow
-  -parseTable(String csv): CSVTable
+  +getDelimiter(): char
+  +setDelimiter(char delimiter): void
+  +getQuote(): char
+  +setQuote(char quote): void
+  +getEscape(): char
+  +setEscape(char escape): void
+  +parseLine(String line): CSVRow
+  +parse(String input): CSVTable
+  +parseFile(String filename): CSVTable
+  -detectDelimiter(String input): char
 }
 CSVParser --> CSVParseException
 CSVParser --> CSVRow
@@ -75,130 +90,139 @@ class CSVRow {
   +size(): int
 }
 
-class CSVRowWithHeader extends CSVRow {
+class CSVRowWithHeaders extends CSVRow {
   ' Fields
-  -header: CSVRow
+  -headers: CSVRow
   ' Constructors
-  +CSVRowWithHeader(CSVRow header, ArrayList<String> values)
+  +CSVRowWithHeaders()
+  +CSVRowWithHeaders(ArrayList<String> values, CSVRow headers)
+  +CSVRowWithHeaders(ArrayList<String> values, ArrayList<String> headers)
   ' Methods
   +get(String header): String
+  +hasHeaders(): boolean
+  +getHeaders(): CSVRow
+  +setHeaders(CSVRow headers): void
+  +setHeaders(ArrayList<String> headers): void
 }
 
 class CSVTable {
   ' Fields
   -rows: ArrayList<CSVRow>
-  -header: CSVRow
+  -headers: CSVRow
   ' Constructors
   +CSVTable()
   +CSVTable(ArrayList<CSVRow> rows)
-  +CSVTable(ArrayList<CSVRow> rows, CSVRow header)
+  +CSVTable(ArrayList<CSVRow> rows, CSVRow headers)
+  +CSVTable(ArrayList<CSVRow> rows, ArrayList<String> headers)
   ' Methods
-  +get(int index): CSVRow
+  +getRows(): ArrayList<CSVRow>
+  +getRow(int index): CSVRow
+  +getRowWithHeaders(int index): CSVRowWithHeaders
+  +getRowsWithHeaders(): ArrayList<CSVRowWithHeaders>
+  +getRowCount(): int
   +size(): int
-  +getHeader(): CSVRow
-  +setHeader(CSVRow header): void
-  +setHeader(ArrayList<String> header): void
-  +addRow(CSVRow row): void
+  +hasHeaders(): boolean
+  +getHeaders(): CSVRow
+  +setHeaders(CSVRow headers): void
+  +setHeaders(ArrayList<String> headers): void
+  +getHeadersCount(): int
+  +getHeaderIndex(String header): int
+  +getHeaderIndex(String header, boolean ignoreCase): int
 }
 
 class CSVReader {
   ' Fields
   -reader: BufferedReader
   -parser: CSVParser
-  -header: CSVRow
   ' Constructors
   +CSVReader(String filename)
-  +CSVReader(String filename, CSVRow header)
-  +CSVReader(String filename, char delimiter)
-  +CSVReader(String filename, char delimiter, CSVRow header)
   +CSVReader(String filename, CSVParser parser)
-  +CSVReader(String filename, CSVParser parser, CSVRow header)
   ' Methods
-  +setHeader(CSVRow header): void
-  +setHeader(ArrayList<String> header): void
   +read(): CSVRow
-  +readAll(): ArrayList<CSVRow>
-  +readAllWithHeader(): ArrayList<CSVRowWithHeader>
-  +readWithHeader(): CSVRowWithHeader
+  +readAll(): CSVTable
   +close(): void
 }
-CSVReader --> BufferedReader
+CSVReader --> java.io.BufferedReader
 CSVReader --> CSVParser
 CSVReader --> CSVRow
-CSVReader --> CSVRowWithHeader
 
 class CSVWriter {
   ' Fields
   -writer: BufferedWriter
-  -delimiter: char
-  -header: CSVRow
+  -parser: CSVParser
   ' Constructors
   +CSVWriter(String filename)
-  +CSVWriter(String filename, CSVRow header)
-  +CSVWriter(String filename, char delimiter)
-  +CSVWriter(String filename, char delimiter, CSVRow header)
+  +CSVWriter(String filename, CSVParser parser)
   ' Methods
-  +setHeader(CSVRow header): void
-  +setHeader(ArrayList<String> header): void
   +write(CSVRow row): void
-  +writeHeader(): void
-  +writeAll(ArrayList<CSVRow> rows): void
+  +write(CSVTable table): void
   +close(): void
 }
-CSVWriter --> BufferedWriter
+CSVWriter --> java.io.BufferedWriter
+CSVWriter --> CSVParser
 CSVWriter --> CSVRow
 
 ' Tests
+class CSVParserTest {
+  ' Fields
+  -parser: CSVParser
+  ' Methods
+  -setUp(): void
+  +testParseLine(): void
+  +testParse(): void
+  +testParseFile(): void
+  +testDetectDelimiter(): void
+}
+CSVParserTest --> CSVParser
+
 class CSVRowTest {
   ' Fields
   -row: CSVRow
-  ' Constructors
-  +CSVRowTest()
   ' Methods
+  -setUp(): void
   +testGet(): void
   +testSize(): void
 }
 CSVRowTest --> CSVRow
 
-class CSVRowWithHeaderTest {
+class CSVRowWithHeadersTest {
   ' Fields
-  -row: CSVRowWithHeader
-  ' Constructors
-  +CSVRowWithHeaderTest()
+  -row: CSVRowWithHeaders
   ' Methods
+  -setUp(): void
   +testGet(): void
+  +testHasHeaders(): void
+  +testGetHeaders(): void
+  +testSetHeaders(): void
 }
-CSVRowWithHeaderTest --> CSVRowWithHeader
+CSVRowWithHeadersTest --> CSVRowWithHeaders
 
-class CSVParserTest {
+class CSVTableTest {
   ' Fields
-  -parser: CSVParser
-  ' Constructors
-  +CSVParserTest()
+  -table: CSVTable
   ' Methods
-  +testGetDelimiter(): void
-  +testParse(): void
-  +testFailParse(): void
-  +testParseLine(): void
-  +testParseValue(): void
-  +testParseValueWithQuotes(): void
-  +testParseValueWithEscapedQuotes(): void
-  +testParseValueWithEscapedQuotesAndDelimiter(): void
-  +testParseValueWithEscapedQuotesAndNewline(): void
+  -setUp(): void
+  +testGetRows(): void
+  +testGetRow(): void
+  +testGetRowWithHeaders(): void
+  +testGetRowsWithHeaders(): void
+  +testGetRowCount(): void
+  +testSize(): void
+  +testHasHeaders(): void
+  +testGetHeaders(): void
+  +testSetHeaders(): void
+  +testGetHeadersCount(): void
+  +testGetHeaderIndex(): void
 }
-CSVParserTest --> CSVParser
+CSVTableTest --> CSVTable
 
 class CSVReaderTest {
   ' Fields
   -reader: CSVReader
-  ' Constructors
-  +CSVReaderTest()
   ' Methods
-  +testSetHeader(): void
+  -setUp(): void
   +testRead(): void
   +testReadAll(): void
-  +testReadAllWithHeader(): void
-  +testReadWithHeader(): void
   +testClose(): void
 }
 CSVReaderTest --> CSVReader
@@ -206,15 +230,24 @@ CSVReaderTest --> CSVReader
 class CSVWriterTest {
   ' Fields
   -writer: CSVWriter
-  ' Constructors
-  +CSVWriterTest()
   ' Methods
-  +testSetHeader(): void
+  -setUp(): void
   +testWrite(): void
-  +testWriteHeader(): void
   +testWriteAll(): void
   +testClose(): void
 }
 CSVWriterTest --> CSVWriter
+
+' Main
+class Main {
+  ' Methods
+  +main(String[] args): void
+}
+Main --> CSVParser
+Main --> CSVRow
+Main --> CSVRowWithHeaders
+Main --> CSVTable
+Main --> CSVReader
+Main --> CSVWriter
 
 @enduml

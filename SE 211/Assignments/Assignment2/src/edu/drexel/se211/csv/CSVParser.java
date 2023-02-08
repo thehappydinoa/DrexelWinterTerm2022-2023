@@ -1,4 +1,4 @@
-package edu.drexel.se211.csvLibrary;
+package edu.drexel.se211.csv;
 
 public class CSVParser {
     // Constants
@@ -15,13 +15,16 @@ public class CSVParser {
 
     // Constructors
     public CSVParser() {
-        this(DEFAULT_DELIMITER, DEFAULT_QUOTE, DEFAULT_ESCAPE, DEFAULT_HAS_HEADER);
+        this(DEFAULT_DELIMITER);
     }
     public CSVParser(char delimiter) {
-        this(delimiter, DEFAULT_QUOTE, DEFAULT_ESCAPE, DEFAULT_HAS_HEADER);
+        this(delimiter, DEFAULT_QUOTE);
     }
     public CSVParser(char delimiter, char quote) {
-        this(delimiter, quote, DEFAULT_ESCAPE, DEFAULT_HAS_HEADER);
+        this(delimiter, quote, DEFAULT_ESCAPE);
+    }
+    public CSVParser(char delimiter, char quote, char escape) {
+        this(delimiter, quote, escape, DEFAULT_HAS_HEADER);
     }
     public CSVParser(char delimiter, char quote, char escape, boolean hasHeader) {
         this.delimiter = delimiter;
