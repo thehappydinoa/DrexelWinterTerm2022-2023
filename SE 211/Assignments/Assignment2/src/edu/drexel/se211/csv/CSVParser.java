@@ -1,5 +1,7 @@
 package edu.drexel.se211.csv;
 
+import java.util.HashMap;
+
 public class CSVParser {
     // Constants
     public static final char DEFAULT_DELIMITER = ',';
@@ -37,43 +39,49 @@ public class CSVParser {
     public char getDelimiter() {
         return delimiter;
     }
-    public char getQuote() {
-        return quote;
-    }
-    public char getEscape() {
-        return escape;
-    }
-    public boolean hasHeader() {
-        return hasHeader;
-    }
     public void setDelimiter(char delimiter) {
         this.delimiter = delimiter;
+    }
+    public char getQuote() {
+        return quote;
     }
     public void setQuote(char quote) {
         this.quote = quote;
     }
+    public char getEscape() {
+        return escape;
+    }
     public void setEscape(char escape) {
         this.escape = escape;
     }
-    public void setHasHeader(boolean hasHeader) {
+    public boolean hasHeaders() {
+        return hasHeader;
+    }
+    public void setHasHeaders(boolean hasHeader) {
         this.hasHeader = hasHeader;
     }
-    private char automaticDelimiter(String line) {
-        int commaCount = 0;
-        int semicolonCount = 0;
+    char detectDelimiter(String line) {
+        // Count the number of symbols (skip quotes and escapes)
+        HashMap<Character, Integer> symbolCount = new HashMap<>();
         for (int i = 0; i < line.length(); i++) {
             char c = line.charAt(i);
-            if (c == ',') {
-                commaCount++;
-            } else if (c == ';') {
-                semicolonCount++;
+            if (symbolCount.containsKey(c)) {
+                symbolCount.put(c, symbolCount.get(c) + 1);
+            } else {
+                symbolCount.put(c, 1);
             }
         }
-        if (commaCount > semicolonCount) {
-            return ',';
-        } else {
-            return ';';
+        // Find the most common symbol (not letter or number)
+        char mostCommonSymbol = 0;
+        for (char c : symbolCount.keySet()) {
+            if (c == getQuote() || c == getEscape() || Character.isLetterOrDigit(c) || c == ' ') {
+                continue;
+            }
+            if (mostCommonSymbol == 0 || symbolCount.get(c) > symbolCount.get(mostCommonSymbol)) {
+                mostCommonSymbol = c;
+            }
         }
+        return mostCommonSymbol;
     }
     public CSVRow parseLine(String line) {
         CSVRow row = new CSVRow();
@@ -85,11 +93,11 @@ public class CSVParser {
             if (inEscape) {
                 cell.append(c);
                 inEscape = false;
-            } else if (c == escape) {
+            } else if (c == getEscape()) {
                 inEscape = true;
-            } else if (c == quote) {
+            } else if (c == getQuote()) {
                 inQuote = !inQuote;
-            } else if (c == delimiter && !inQuote) {
+            } else if (c == getDelimiter() && !inQuote) {
                 row.addCell(cell.toString());
                 cell = new StringBuilder();
             } else {
@@ -102,19 +110,15 @@ public class CSVParser {
     public CSVTable parseTable(String table) {
         CSVTable csvTable = new CSVTable();
         String[] lines = table.split("\r\n|\r|\n");
-        delimiter = automaticDelimiter(lines[0]);
-        if (hasHeader()) {
-            CSVRow header = parseLine(lines[0]);
-            csvTable.setHeader(header);
-            for (int i = 1; i < lines.length; i++) {
-                CSVRow row = parseLine(lines[i]);
-                csvTable.addRow(row);
-            }
-        } else {
-            for (int i = 0; i < lines.length; i++) {
-                CSVRow row = parseLine(lines[i]);
-                csvTable.addRow(row);
-            }
+        int start = 0;
+        delimiter = detectDelimiter(lines[0]);
+        if (hasHeaders()) {
+            csvTable.setHeaders(parseLine(lines[0]));
+            start = 1;
+        }
+        for (int i = start; i < lines.length; i++) {
+            CSVRow row = parseLine(lines[i]);
+            csvTable.addRow(row);
         }
         return csvTable;
     }

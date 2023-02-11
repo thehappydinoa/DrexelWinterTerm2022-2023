@@ -9,7 +9,6 @@ public class CSVReader {
     // Fields
     private CSVParser parser;
     private BufferedReader reader;
-    private boolean hasHeader;
 
     // Constructors
     public CSVReader(String filename) throws FileNotFoundException {
@@ -24,7 +23,7 @@ public class CSVReader {
     public CSVReader(CSVParser parser, BufferedReader reader, boolean hasHeader) {
         this.parser = parser;
         this.reader = reader;
-        this.hasHeader = hasHeader;
+        setHasHeader(hasHeader);
     }
 
     // Methods
@@ -40,6 +39,13 @@ public class CSVReader {
     public void setReader(BufferedReader reader) {
         this.reader = reader;
     }
+    public boolean hasHeader() {
+        return parser.hasHeaders();
+    }
+    public void setHasHeader(boolean hasHeader) {
+        parser.setHasHeaders(hasHeader);
+    }
+
     public CSVTable readTable() throws Exception {
         StringBuilder fileContents = new StringBuilder();
         String line = reader.readLine();

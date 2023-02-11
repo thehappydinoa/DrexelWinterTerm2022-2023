@@ -8,7 +8,7 @@ public class CSVRow {
 
     // Constructors
     public CSVRow() {
-        cells = new ArrayList<>();
+        this(new ArrayList<>());
     }
     public CSVRow(ArrayList<String> cells) {
         this.cells = cells;
@@ -18,7 +18,7 @@ public class CSVRow {
     public ArrayList<String> getCells() {
         return cells;
     }
-    public int getCellCount() {
+    public int size() {
         return cells.size();
     }
     public void addCell(String cell) {
@@ -26,6 +26,9 @@ public class CSVRow {
     }
     public void setCells(ArrayList<String> cells) {
         this.cells = cells;
+    }
+    public String get(int index) {
+        return getCell(index);
     }
     public String getCell(int index) {
         return cells.get(index);
@@ -35,5 +38,22 @@ public class CSVRow {
     }
     public void removeCell(int index) {
         cells.remove(index);
+    }
+    public void print(boolean bold) {
+        StringBuilder sb = new StringBuilder();
+        for (String cell : cells) {
+            if (bold) {
+                sb.append("\033[1m" + cell + "\033[0m");
+            } else {
+                sb.append(cell);
+            }
+            sb.append(",");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        System.out.println(sb.toString());
+    }
+
+    public void print() {
+        print(false);
     }
 }

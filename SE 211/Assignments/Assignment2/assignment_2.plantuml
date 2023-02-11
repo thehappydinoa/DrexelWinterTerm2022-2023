@@ -70,10 +70,11 @@ class CSVParser {
   +setQuote(char quote): void
   +getEscape(): char
   +setEscape(char escape): void
-  +parseLine(String line): CSVRow
-  +parse(String input): CSVTable
-  +parseFile(String filename): CSVTable
+  +hasHeaders(): boolean
+  +setHasHeaders(boolean hasHeaders): void
   -detectDelimiter(String input): char
+  +parseLine(String line): CSVRow
+  +parseTable(String input): CSVTable
 }
 CSVParser --> CSVParseException
 CSVParser --> CSVRow
@@ -81,13 +82,16 @@ CSVParser --> CSVTable
 
 class CSVRow {
   ' Fields
-  -values: ArrayList<String>
+  -cells: ArrayList<String>
   ' Constructors
   +CSVRow()
-  +CSVRow(ArrayList<String> values)
+  +CSVRow(ArrayList<String> cells)
   ' Methods
-  +get(int index): String
-  +size(): int
+  +getCells(): ArrayList<String>
+  +getCellCount(): int
+  +getCell(int index): String
+  +setCell(int index, String value): void
+  +addCell(String value): void
 }
 
 class CSVRowWithHeaders extends CSVRow {
@@ -99,10 +103,13 @@ class CSVRowWithHeaders extends CSVRow {
   +CSVRowWithHeaders(ArrayList<String> values, ArrayList<String> headers)
   ' Methods
   +get(String header): String
-  +hasHeaders(): boolean
   +getHeaders(): CSVRow
   +setHeaders(CSVRow headers): void
   +setHeaders(ArrayList<String> headers): void
+  +getHeader(int index): String
+  -getHeaderIndex(String header): int
+  -getHeaderIndex(String header, boolean ignoreCase): int
+  +getHeaderCount(): int
 }
 
 class CSVTable {
@@ -116,18 +123,23 @@ class CSVTable {
   +CSVTable(ArrayList<CSVRow> rows, ArrayList<String> headers)
   ' Methods
   +getRows(): ArrayList<CSVRow>
+  +setRows(ArrayList<CSVRow> rows): void
   +getRow(int index): CSVRow
+  +addRow(CSVRow row): void
+  +setRow(int index, CSVRow row): void
+  +removeRow(int index): void
+  +removeRow(CSVRow row): void
   +getRowWithHeaders(int index): CSVRowWithHeaders
   +getRowsWithHeaders(): ArrayList<CSVRowWithHeaders>
   +getRowCount(): int
-  +size(): int
   +hasHeaders(): boolean
   +getHeaders(): CSVRow
   +setHeaders(CSVRow headers): void
   +setHeaders(ArrayList<String> headers): void
-  +getHeadersCount(): int
-  +getHeaderIndex(String header): int
-  +getHeaderIndex(String header, boolean ignoreCase): int
+  +getHeaderCount(): int
+  -getHeaderIndex(String header): int
+  -getHeaderIndex(String header, boolean ignoreCase): int
+  +print(): void
 }
 
 class CSVReader {

@@ -32,14 +32,14 @@ class CSVRowTest {
         csvRow.addCell("cell1");
         csvRow.addCell("cell2");
 
-        assertEquals(2, csvRow.getCellCount());
+        assertEquals(2, csvRow.size());
     }
 
     @Test
     void testAddCell() {
         csvRow.addCell("cell1");
 
-        assertEquals(1, csvRow.getCellCount());
+        assertEquals(1, csvRow.size());
         assertEquals("cell1", csvRow.getCell(0));
     }
 
@@ -77,7 +77,7 @@ class CSVRowTest {
         csvRow.addCell("cell2");
         csvRow.removeCell(1);
 
-        assertEquals(1, csvRow.getCellCount());
+        assertEquals(1, csvRow.size());
         assertEquals("cell1", csvRow.getCell(0));
     }
 
