@@ -3,7 +3,6 @@ package filters;
 import java.io.EOFException;
 import java.util.LinkedList;
 
-
 public class Pipe {
 	private LinkedList<String> buffer;
 	private boolean closed;
@@ -14,16 +13,15 @@ public class Pipe {
 	}
 
 	public void write(String s) {
-		if(closed)
+		if (closed)
 			return;
 		buffer.add(s);
 	}
-	
 
 	public String read() throws EOFException {
-		while(true) {
-			if(buffer.isEmpty()) {
-				if(closed)
+		while (true) {
+			if (buffer.isEmpty()) {
+				if (closed)
 					throw new EOFException();
 				try {
 					Thread.sleep(10);
@@ -35,9 +33,9 @@ public class Pipe {
 			}
 		}
 	}
-	
+
 	public void close() {
 		closed = true;
 	}
-	
+
 }
