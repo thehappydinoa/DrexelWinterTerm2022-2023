@@ -1,0 +1,18 @@
+mke#!/usr/bin/env bash
+
+echo "Cleaning build dir...";
+rm -rf build;
+mkdir build;
+
+echo "Compiling...";
+javac `find src/ -name \*.java -print`;
+
+echo "Copying...";
+cp -R src/ build/;
+
+echo "Cleaning again...";
+rm `find build/ -name \*.java -print`;
+rm `find src/ -name \*.class -print`;
+
+echo "Done!";
+
