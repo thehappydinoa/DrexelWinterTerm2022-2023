@@ -18,11 +18,33 @@ participant Output
 participant Search
 
 User -> Input: Input text
-Input -> CircularShifter: Circular shift
-CircularShifter -> Alphabetizer: Alphabetize
-Alphabetizer -> NoiseWordRemoval: Remove noise words
-NoiseWordRemoval -> Output: Output text
-Output -> Search: Search
-Search -> Output: Output search results
+activate Input
+Input -> Input: Validate input
+Input -> CircularShifter: Pipe input
+deactivate Input
+activate CircularShifter
+CircularShifter -> CircularShifter: Circular shift
+CircularShifter -> Alphabetizer: Pipe circular shifts
+deactivate CircularShifter
+activate Alphabetizer
+Alphabetizer -> Alphabetizer: Alphabetize
+Alphabetizer -> NoiseWordRemoval: Pipe alphabetized text
+deactivate Alphabetizer
+activate NoiseWordRemoval
+NoiseWordRemoval -> NoiseWordRemoval: Remove noise words
+NoiseWordRemoval -> Output: Pipe text
+deactivate NoiseWordRemoval
+activate Output
+Output -> Output: Output text
+Output -> Search: Pipe text
+deactivate Output
+activate Search
+Search -> Search: Search
+Output <-- Search: Pipe search results
+deactivate Search
+activate Output
+Output -> Output: Output search results
+User <-- Output: Return search results
+deactivate Output
 
 @enduml

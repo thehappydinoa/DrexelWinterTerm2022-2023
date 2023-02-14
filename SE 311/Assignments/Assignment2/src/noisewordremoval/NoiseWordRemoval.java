@@ -1,4 +1,7 @@
-package filters;
+package noisewordremoval;
+
+import filters.Filter;
+import utilities.Settings;
 
 import java.io.EOFException;
 import java.util.ArrayList;

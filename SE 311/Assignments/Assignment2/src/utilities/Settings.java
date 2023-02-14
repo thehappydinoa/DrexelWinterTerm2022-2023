@@ -1,4 +1,4 @@
-package filters;
+package utilities;
 
 import java.io.InputStream;
 import java.util.ArrayList;

@@ -1,4 +1,9 @@
-package filters;
+package input;
+
+import filters.*;
+import utilities.FileHelper;
+import utilities.InputOutputType;
+import utilities.Settings;
 
 /**
  * The input filter

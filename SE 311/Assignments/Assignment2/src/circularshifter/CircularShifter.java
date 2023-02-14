@@ -1,7 +1,10 @@
-package filters;
+package circularshifter;
+
+import filters.Filter;
 
 import java.io.EOFException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The CircularShifter filter
@@ -21,7 +24,7 @@ public class CircularShifter extends Filter {
       return;
     }
     String[] lines = linesString.split("\\r?\\n");
-    ArrayList<String> shiftedLines = new ArrayList<>();
+    ArrayList<String> shiftedLines = new ArrayList<>(List.of(lines));
     for (String line : lines) {
       String[] words = line.split(" ");
       for (int i = 0; i < words.length; i++) {

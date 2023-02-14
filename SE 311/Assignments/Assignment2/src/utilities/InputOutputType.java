@@ -1,4 +1,4 @@
-package filters;
+package utilities;
 
 /**
  * The enum for the input and output types

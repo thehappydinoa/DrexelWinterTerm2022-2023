@@ -1,0 +1,66 @@
+@startuml SE 311 - Assignment 2 Part 2
+
+title
+  Component Diagram for Part 2
+  Aidan Holland (adh346)
+endtitle
+
+'https://plantuml.com/component-diagram
+
+'package filters {
+'  [Filter]
+'}
+
+package input {
+'  [Filter] <|-- [Input]
+  [Input]
+}
+
+package circularShift {
+'  [Filter] <|-- [CircularShift]
+  [CircularShift]
+}
+
+package alphabetizer {
+'  [Filter] <|-- [Alphabetizer]
+  [Alphabetizer]
+}
+
+package noiseWords {
+'  [Filter] <|-- [NoiseWords]
+  [NoiseWords]
+}
+
+package output {
+'  [Filter] <|-- [Output]
+  [Output]
+}
+
+package search {
+'  [Filter] <|-- [Search]
+  [Search]
+}
+
+interface Pipe1 as "Pipe"
+[Input] ..> Pipe1 : uses
+Pipe1 - [CircularShift] : pipe
+interface Pipe2 as "Pipe"
+[CircularShift] ..> () Pipe2 : uses
+Pipe2 - [Alphabetizer] : pipe
+interface Pipe3 as "Pipe"
+[Alphabetizer] ..> () Pipe3 : uses
+Pipe3 - [NoiseWords] : pipe
+interface Pipe4 as "Pipe"
+[NoiseWords] ..> () Pipe4 : uses
+Pipe4 - [Output] : pipe
+interface Pipe5 as "Pipe"
+[Output] ..> () Pipe5 : uses
+Pipe5 - [Search] : pipe
+
+'[Input] -> [CircularShift] : input
+'[CircularShift] -> [Alphabetizer] : circular shift
+'[Alphabetizer] -> [NoiseWords] : alphabetize
+'[NoiseWords] -> [Output] : remove noise words
+'[Output] -> [Search] : output
+
+@enduml

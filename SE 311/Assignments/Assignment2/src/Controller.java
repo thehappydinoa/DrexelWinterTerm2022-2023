@@ -1,4 +1,9 @@
-import filters.*;
+import alphabetizer.Alphabetizer;
+import circularshifter.CircularShifter;
+import filters.Pipeline;
+import input.Input;
+import noisewordremoval.NoiseWordRemoval;
+import output.Output;
 
 /**
  * The controller class
