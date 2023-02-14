@@ -3,20 +3,34 @@ package filters;
 import java.io.EOFException;
 import java.util.ArrayList;
 
+/**
+ * The NoiseWordRemoval filter
+ */
 public class NoiseWordRemoval extends Filter {
 
-    private Settings settings;
-    private ArrayList<String> noiseWords;
+    private final ArrayList<String> noiseWords;
 
+    /**
+     * Reads from its pipe, removes noise words, and writes to its pipe
+     */
     public NoiseWordRemoval() {
-        settings = Settings.getInstance();
+        Settings settings = Settings.getInstance();
         noiseWords = settings.getStopWords();
     }
 
+    /**
+     * Checks if a word is a noise word
+     *
+     * @param word The word to check
+     * @return True if the word is a noise word, false otherwise
+     */
     private boolean isNoiseWord(String word) {
         return noiseWords.contains(word);
     }
 
+    /**
+     * Reads from its pipe, removes noise words, and writes to its pipe
+     */
     public void run() {
         String linesString;
         try {

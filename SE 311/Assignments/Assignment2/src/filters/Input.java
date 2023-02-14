@@ -1,29 +1,38 @@
 package filters;
 
+/**
+ * The input filter
+ */
 public class Input extends Filter {
-    InputOutputType inputType;
+    private final InputOutputType inputType;
 
 
+    /**
+     * Creates a new input filter
+     */
     public Input() {
         Settings settings = Settings.getInstance();
         inputType = InputOutputType.fromString(settings.getInputType());
         setOut(new Pipe());
     }
 
+    /**
+     * Reads from the input and writes to its pipe
+     */
     public void run() {
         switch (inputType) {
-            case FILE:
-                readFile();
-                break;
-            case CONSOLE:
-                readConsole();
-                break;
-            default:
+            case FILE -> readFile();
+            case CONSOLE -> readConsole();
+            default -> {
                 System.out.println("Invalid input type, please specify either 'file' or 'console'");
                 System.exit(1);
+            }
         }
     }
 
+    /**
+     * Reads from the input file and writes to its pipe
+     */
     public void readFile() {
         String fileName = Settings.getInstance().getInputFile();
         if (fileName == null) {
@@ -34,17 +43,20 @@ public class Input extends Filter {
         write(fileContents);
     }
 
+    /**
+     * Reads from the console and writes to its pipe
+     */
     private void readConsole() {
         System.out.println("Enter text to be filtered, press enter twice to finish");
-        String input = "";
+        StringBuilder input = new StringBuilder();
         String line;
         while (true) {
-            line = System.console().readLine();
+            line = System.console().readLine().trim();
             if (line.equals("")) {
                 break;
             }
-            input += line + "\r\n";
+            input.append(line).append("\r\n");
         }
-        write(input);
+        write(input.toString());
     }
 }

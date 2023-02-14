@@ -3,7 +3,14 @@ package filters;
 import java.io.EOFException;
 import java.util.ArrayList;
 
+/**
+ * The CircularShifter filter
+ */
 public class CircularShifter extends Filter {
+
+    /**
+     * Reads from its pipe, shifts the lines, and writes to its pipe
+     */
   public void run() {
     String linesString;
     try {

@@ -3,7 +3,14 @@ package filters;
 import java.io.EOFException;
 import java.util.Arrays;
 
+/**
+ * The Alphabetizer filter
+ */
 public class Alphabetizer extends Filter {
+
+    /**
+     * Reads from its pipe, sorts the lines, and writes to its pipe
+     */
   public void run() {
     String linesString;
     try {

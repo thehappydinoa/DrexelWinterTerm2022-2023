@@ -1,9 +1,17 @@
 package filters;
 
+/**
+ * The pipeline class
+ */
 public class Pipeline implements Runnable {
 
 	private final Filter[] filters;
 
+	/**
+	 * Creates a new pipeline
+	 *
+	 * @param filters The filters to add to the pipeline
+	 */
 	public Pipeline(Filter... filters) {
 		this.filters = filters;
 
@@ -16,6 +24,9 @@ public class Pipeline implements Runnable {
 		}
 	}
 
+	/**
+	 * Runs the pipeline
+	 */
 	@Override
 	public void run() {
 		for (Filter f : filters) {

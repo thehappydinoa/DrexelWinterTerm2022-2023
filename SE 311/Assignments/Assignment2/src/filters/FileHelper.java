@@ -2,7 +2,17 @@ package filters;
 
 import java.io.*;
 
+/**
+ * A helper class for reading and writing files
+ */
 public class FileHelper {
+
+    /**
+     * Reads a file and returns its contents as a string
+     *
+     * @param fileName The name of the file to read
+     * @return The contents of the file
+     */
     public static String readFile(String fileName) {
         BufferedReader reader;
         try {
@@ -25,6 +35,12 @@ public class FileHelper {
         return fileContents.toString();
     }
 
+    /**
+     * Writes a string to a file
+     *
+     * @param fileName The name of the file to write to
+     * @param contents The contents to write to the file
+     */
     public static void writeFile(String fileName, String contents) {
         BufferedWriter writer;
         try {
