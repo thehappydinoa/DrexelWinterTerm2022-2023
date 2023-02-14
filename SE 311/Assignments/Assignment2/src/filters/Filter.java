@@ -15,7 +15,7 @@ public abstract class Filter implements Runnable {
 	}
 
 	/**
-	 * Writes to it's pipe
+	 * Writes to its pipe
 	 * 
 	 * @param s
 	 */
@@ -28,7 +28,7 @@ public abstract class Filter implements Runnable {
 	}
 
 	/**
-	 * Reads from it's pipe
+	 * Reads from its pipe
 	 * 
 	 * @return
 	 * @throws EOFException

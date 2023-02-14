@@ -1,24 +1,20 @@
 package filters;
 
+import java.io.EOFException;
+import java.util.Arrays;
+
 public class Alphabetizer extends Filter {
-
-  public Alphabetizer() {
-
-  }
-
   public void run() {
-    // TODO: Write method
-
+    String linesString;
+    try {
+      linesString = read();
+    } catch (EOFException e) {
+      // TODO: Auto-generated catch block
+      e.printStackTrace();
+      return;
+    }
+    String[] lines = linesString.split("\\r?\\n");
+    Arrays.sort(lines, String.CASE_INSENSITIVE_ORDER);
+    write(String.join("\r\n", lines));
   }
-
-  public void setIn(Pipe in) {
-    // TODO: Write method
-
-  }
-
-  public void setOut(Pipe out) {
-    // TODO: Write method
-
-  }
-
 }

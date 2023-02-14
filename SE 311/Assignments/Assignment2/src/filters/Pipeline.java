@@ -2,7 +2,7 @@ package filters;
 
 public class Pipeline implements Runnable {
 
-	private Filter[] filters;
+	private final Filter[] filters;
 
 	public Pipeline(Filter... filters) {
 		this.filters = filters;

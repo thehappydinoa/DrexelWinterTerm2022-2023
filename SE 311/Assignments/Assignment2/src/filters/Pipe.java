@@ -4,11 +4,11 @@ import java.io.EOFException;
 import java.util.LinkedList;
 
 public class Pipe {
-	private LinkedList<String> buffer;
+	private final LinkedList<String> buffer;
 	private boolean closed;
 
 	public Pipe() {
-		buffer = new LinkedList<String>();
+		buffer = new LinkedList<>();
 		closed = false;
 	}
 
@@ -26,7 +26,7 @@ public class Pipe {
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {
-					System.err.println("InterruptedExcpetion caught in Pipe");
+					System.err.println("InterruptedException caught in Pipe");
 				}
 			} else {
 				return buffer.pop();

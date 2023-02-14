@@ -1,10 +1,4 @@
-
-import filters.Input;
-import filters.CircularShifter;
-import filters.NoiseWordRemoval;
-import filters.Alphabetizer;
-import filters.Output;
-import filters.Pipeline;
+import filters.*;
 
 public class Controller {
   public static void main(String[] args) {

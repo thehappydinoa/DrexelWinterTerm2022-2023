@@ -1,0 +1,28 @@
+@startuml SE 311 - Assignment 2 Part 1
+
+title
+  Sequence Diagram for Part 1
+  Aidan Holland (adh346)
+endtitle
+
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor User
+participant Input
+participant CircularShifter
+participant Alphabetizer
+participant NoiseWordRemoval
+participant Output
+participant Search
+
+User -> Input: Input text
+Input -> CircularShifter: Circular shift
+CircularShifter -> Alphabetizer: Alphabetize
+Alphabetizer -> NoiseWordRemoval: Remove noise words
+NoiseWordRemoval -> Output: Output text
+Output -> Search: Search
+Search -> Output: Output search results
+
+@enduml
