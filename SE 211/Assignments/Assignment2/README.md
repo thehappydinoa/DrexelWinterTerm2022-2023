@@ -25,6 +25,9 @@ library, and error recovery.
 - [ ] The library should be able to display a list of records in a human
       readable format.
 - [ ] The library should be able to filter the columns of a list of records.
+- [ ] The library should be able to handle CSV files with a field separator
+      character that is not a comma.
+- [ ] The library should be able to recover from errors in the CSV file.
 
 ## Tests
 
@@ -62,8 +65,8 @@ The following test cases should be used to test your library:
 
 ## UML
 
-<!-- TODO: Create UML -->
+![UML Diagram](uml.png)
 
 ## Known Issues
 
-<!-- TODO: List known issues -->
+N/A

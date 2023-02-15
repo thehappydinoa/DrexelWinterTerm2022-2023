@@ -1,8 +1,9 @@
 @startuml SE 211: Assignment 2
 
+'https://plantuml.com/class-diagram
+
 ' Styles
 skinparam classAttributeIconSize 0
-
 
 ' Title
 title
