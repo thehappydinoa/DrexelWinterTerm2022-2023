@@ -27,6 +27,12 @@ public class CSVRow {
     public void setCells(ArrayList<String> cells) {
         this.cells = cells;
     }
+    public void setCells(ArrayList<String> cells, int size) {
+        this.cells = cells;
+        while (this.cells.size() < size) {
+            this.cells.add(null);
+        }
+    }
     public String get(int index) {
         return getCell(index);
     }
@@ -36,8 +42,11 @@ public class CSVRow {
     public String getCell(int index, String defaultValue) {
         if (index >= cells.size()) {
             return defaultValue;
-        } else {
+        }
+        try {
             return cells.get(index);
+        } catch (IndexOutOfBoundsException e) {
+            return defaultValue;
         }
     }
     public void setCell(int index, String cell) {
@@ -79,7 +88,7 @@ public class CSVRow {
         for (int i = cells.size(); i < mostCells; i++) {
             sb.append(delimiter);
         }
-
+        sb.append("\r\n");
         return sb.toString();
     }
 

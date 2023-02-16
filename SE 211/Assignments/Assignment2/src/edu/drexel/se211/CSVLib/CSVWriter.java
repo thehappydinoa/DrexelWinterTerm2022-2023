@@ -1,6 +1,7 @@
 package edu.drexel.se211.CSVLib;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -17,6 +18,10 @@ public class CSVWriter {
     public CSVWriter(CSVParser parser, BufferedWriter writer) {
         this.parser = parser;
         this.writer = writer;
+    }
+
+    public CSVWriter(File selectedFile) throws IOException {
+        this(new CSVParser(), new BufferedWriter(new FileWriter(selectedFile)));
     }
 
     public void writeTable(CSVTable table) {

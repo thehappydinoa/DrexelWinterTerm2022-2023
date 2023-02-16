@@ -14,7 +14,7 @@ public class CSVTable {
     }
     public CSVTable(ArrayList<CSVRow> rows) {
         this.rows = rows;
-        longestRow = findLongestRow();
+        setLongestRow(findLongestRow());
     }
     public CSVTable(ArrayList<CSVRow> rows, CSVRow headers) {
         this(rows);
@@ -53,25 +53,25 @@ public class CSVTable {
     public void addRow(CSVRow row) {
         rows.add(row);
         if (row.size() > longestRow) {
-            longestRow = row.size();
+            setLongestRow(row.size());
         }
     }
     public void setRow(int index, CSVRow row) {
         rows.set(index, row);
         if (row.size() > longestRow) {
-            longestRow = row.size();
+            setLongestRow(row.size());
         }
     }
     public void setRows(ArrayList<CSVRow> rows) {
         this.rows = rows;
-        longestRow = findLongestRow();
+        setLongestRow(findLongestRow());
     }
     public void removeRow(int index) {
         // Get the row to be removed
         CSVRow row = getRow(index);
         // If the row is the longest row, find the new longest row
         if (row.size() == longestRow) {
-            longestRow = findLongestRow();
+            setLongestRow(findLongestRow());
         }
         // Remove the row
         rows.remove(index);
@@ -90,6 +90,15 @@ public class CSVTable {
     }
     public int getLongestRow() {
         return longestRow;
+    }
+    public void setLongestRow(int longestRow) {
+        this.longestRow = longestRow;
+        // Update the other rows
+        for (CSVRow row : rows) {
+            if (row.size() < longestRow) {
+                row.setCells(row.getCells(), longestRow);
+            }
+        }
     }
     public boolean hasHeaders() {
         return headers != null;
@@ -129,11 +138,11 @@ public class CSVTable {
     }
 
     public String[][] to2DArray() {
-        String[][] data = new String[getRowCount()][getHeaderCount()];
+        String[][] data = new String[getRowCount()][getLongestRow()];
         for (int i = 0; i < getRowCount(); i++) {
             CSVRow row = getRow(i);
             for (int j = 0; j < getLongestRow(); j++) {
-                data[i][j] = row.getCell(j, null);
+                data[i][j] = row.getCell(j, "");
             }
         }
         return data;
