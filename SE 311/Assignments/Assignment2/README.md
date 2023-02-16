@@ -1,18 +1,28 @@
-## Getting Started
+## SE 311 - Assignment 2 Part 1
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Aidan Holland (adh346)
 
 ## Folder Structure
 
 The workspace contains two folders by default, where:
 
 - `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+- `test`: the folder to maintain tests
+- `bin`: the folder to maintain compiled output files
+- `resources`: the folder to maintain resources
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## How to Run
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+- Open the project in IntelliJ IDEA
+- Open the `resources` folder and edit the `settings.properties` file
+- Run the `Controller` class in the `src` folder
+- The output will be in the project root folder
 
-## Dependency Management
+## How to Test
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+- Open the project in IntelliJ IDEA
+- Run the `Test` configuration
+
+## Sequence Diagram
+
+![Sequence Diagram](sequence_diagram.png)

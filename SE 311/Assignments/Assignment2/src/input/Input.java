@@ -1,8 +1,8 @@
 package input;
 
 import filters.*;
-import utilities.FileHelper;
-import utilities.InputOutputType;
+import filters.FileHelper;
+import filters.InputOutputType;
 import utilities.Settings;
 
 /**

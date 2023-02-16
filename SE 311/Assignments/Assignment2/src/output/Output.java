@@ -1,8 +1,8 @@
 package output;
 
-import utilities.FileHelper;
+import filters.FileHelper;
 import filters.Filter;
-import utilities.InputOutputType;
+import filters.InputOutputType;
 import utilities.Settings;
 
 import java.io.EOFException;
