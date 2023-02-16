@@ -1,4 +1,4 @@
-package edu.drexel.se211.csv;
+package edu.drexel.se211.CSVLib;
 
 import java.util.ArrayList;
 
@@ -6,6 +6,7 @@ public class CSVTable {
     // Fields
     private ArrayList<CSVRow> rows;
     private CSVRow headers;
+    private int longestRow = 0;
 
     // Constructors
     public CSVTable() {
@@ -13,6 +14,7 @@ public class CSVTable {
     }
     public CSVTable(ArrayList<CSVRow> rows) {
         this.rows = rows;
+        longestRow = findLongestRow();
     }
     public CSVTable(ArrayList<CSVRow> rows, CSVRow headers) {
         this(rows);
@@ -33,6 +35,9 @@ public class CSVTable {
         return rows.size();
     }
     public CSVRow getRow(int index) {
+        if (index == -1) {
+            index = rows.size() - 1;
+        }
         return rows.get(index);
     }
     public CSVRowWithHeaders getRowWithHeaders(int index) {
@@ -47,18 +52,44 @@ public class CSVTable {
     }
     public void addRow(CSVRow row) {
         rows.add(row);
+        if (row.size() > longestRow) {
+            longestRow = row.size();
+        }
     }
     public void setRow(int index, CSVRow row) {
         rows.set(index, row);
+        if (row.size() > longestRow) {
+            longestRow = row.size();
+        }
     }
     public void setRows(ArrayList<CSVRow> rows) {
         this.rows = rows;
+        longestRow = findLongestRow();
     }
     public void removeRow(int index) {
+        // Get the row to be removed
+        CSVRow row = getRow(index);
+        // If the row is the longest row, find the new longest row
+        if (row.size() == longestRow) {
+            longestRow = findLongestRow();
+        }
+        // Remove the row
         rows.remove(index);
     }
     public void removeRow(CSVRow row) {
-        rows.remove(row);
+        removeRow(rows.indexOf(row));
+    }
+    private int findLongestRow() {
+        int longest = 0;
+        for (CSVRow row : rows) {
+            if (row.size() > longest) {
+                longest = row.size();
+            }
+        }
+        return longest;
+    }
+    public int getLongestRow() {
+        return longestRow;
     }
     public boolean hasHeaders() {
         return headers != null;
@@ -95,5 +126,16 @@ public class CSVTable {
         for (CSVRow row : rows) {
             row.print();
         }
+    }
+
+    public String[][] to2DArray() {
+        String[][] data = new String[getRowCount()][getHeaderCount()];
+        for (int i = 0; i < getRowCount(); i++) {
+            CSVRow row = getRow(i);
+            for (int j = 0; j < getLongestRow(); j++) {
+                data[i][j] = row.getCell(j, null);
+            }
+        }
+        return data;
     }
 }

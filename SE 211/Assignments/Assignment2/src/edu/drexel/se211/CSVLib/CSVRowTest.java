@@ -1,4 +1,4 @@
-package edu.drexel.se211.csv;
+package edu.drexel.se211.CSVLib;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

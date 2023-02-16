@@ -1,5 +1,5 @@
-import edu.drexel.se211.csv.CSVReader;
-import edu.drexel.se211.csv.CSVTable;
+import edu.drexel.se211.CSVLib.CSVReader;
+import edu.drexel.se211.CSVLib.CSVTable;
 
 public class Main {
     public static void main(String[] args) {

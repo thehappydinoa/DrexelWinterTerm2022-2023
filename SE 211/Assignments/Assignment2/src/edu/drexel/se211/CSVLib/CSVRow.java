@@ -1,4 +1,4 @@
-package edu.drexel.se211.csv;
+package edu.drexel.se211.CSVLib;
 
 import java.util.ArrayList;
 
@@ -33,7 +33,18 @@ public class CSVRow {
     public String getCell(int index) {
         return cells.get(index);
     }
+    public String getCell(int index, String defaultValue) {
+        if (index >= cells.size()) {
+            return defaultValue;
+        } else {
+            return cells.get(index);
+        }
+    }
     public void setCell(int index, String cell) {
+        // If the index is out of bounds, add null cells until it's not
+        while (index >= cells.size()) {
+            cells.add(null);
+        }
         cells.set(index, cell);
     }
     public void removeCell(int index) {

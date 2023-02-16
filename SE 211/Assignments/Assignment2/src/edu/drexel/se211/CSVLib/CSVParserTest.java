@@ -1,4 +1,4 @@
-package edu.drexel.se211.csv;
+package edu.drexel.se211.CSVLib;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -154,5 +154,12 @@ class CSVParserTest {
         assertEquals("a", row.get(0));
         assertEquals("b", row.get(1));
         assertEquals("c,", row.get(2));
+    }
+
+    @Test
+    void testParseSingleLine() {
+        CSVRow row = parser.parseLine("a,b,c");
+        assertEquals(3, row.size());
+        assertEquals(parser.toSingleLine(row), "a,b,c");
     }
 }
