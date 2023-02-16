@@ -90,4 +90,70 @@ class CSVRowTest {
     void testGetCellThrowsException() {
         assertThrows(IndexOutOfBoundsException.class, () -> csvRow.getCell(0));
     }
+
+    @Test
+    void testToString() {
+        csvRow.addCell("cell1");
+        csvRow.addCell("cell2");
+
+        assertEquals("cell1,cell2", csvRow.toString(',', '"', '\\'));
+    }
+
+    @Test
+    void testToStringWithNullCell() {
+        csvRow.addCell("cell1");
+        csvRow.addCell(null);
+        csvRow.addCell("cell2");
+
+        assertEquals("cell1,,cell2", csvRow.toString(',', '"', '\\'));
+    }
+
+    @Test
+    void testToStringWithDelimiterInCell() {
+        csvRow.addCell("cell1");
+        csvRow.addCell("cell,2");
+        csvRow.addCell("cell2");
+
+        assertEquals("cell1,\"cell,2\",cell2", csvRow.toString(',', '"', '\\'));
+    }
+
+    @Test
+    void testToStringWithQuoteInCell() {
+        csvRow.addCell("cell1");
+        csvRow.addCell("cell\"2");
+        csvRow.addCell("cell2");
+
+        assertEquals("cell1,\"cell\\\"2\",cell2", csvRow.toString(',', '"', '\\'));
+    }
+
+    @Test
+    void testToStringWithEscapeInCell() {
+        csvRow.addCell("cell1");
+        csvRow.addCell("cell\\2");
+        csvRow.addCell("cell2");
+
+        assertEquals("cell1,\"cell\\\\2\",cell2", csvRow.toString(',', '"', '\\'));
+    }
+
+    @Test
+    void testToStringForEmptyRow() {
+        assertEquals("", csvRow.toString());
+    }
+
+    @Test
+    void testToStringWithEmptyRowMostCells() {
+        csvRow.addCell("cell1");
+        csvRow.addCell("");
+        csvRow.addCell("cell2");
+
+        assertEquals("cell1,,cell2,", csvRow.toString(',', '"', '\\', 4));
+    }
+
+    @Test
+    void testToStringFromParser() {
+        csvRow.addCell("cell1");
+        csvRow.addCell("cell2");
+
+        assertEquals("cell1,cell2", csvRow.toString(',', '"', '\\', 2));
+    }
 }

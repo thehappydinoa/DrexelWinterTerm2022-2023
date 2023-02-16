@@ -155,11 +155,4 @@ class CSVParserTest {
         assertEquals("b", row.get(1));
         assertEquals("c,", row.get(2));
     }
-
-    @Test
-    void testParseSingleLine() {
-        CSVRow row = parser.parseLine("a,b,c");
-        assertEquals(3, row.size());
-        assertEquals(parser.toSingleLine(row), "a,b,c");
-    }
 }

@@ -122,33 +122,4 @@ public class CSVParser {
         }
         return csvTable;
     }
-
-    public String toSingleLine(CSVRow row, int longestRow) {
-        StringBuilder line = new StringBuilder();
-        for (int i = 0; i < longestRow; i++) {
-            String cell = row.getCell(i, "");
-            if (cell.contains(Character.toString(getDelimiter())) || cell.contains(Character.toString(getQuote()))) {
-                line.append(getQuote());
-                for (int j = 0; j < cell.length(); j++) {
-                    char c = cell.charAt(j);
-                    if (c == getQuote()) {
-                        line.append(getEscape());
-                    }
-                    line.append(c);
-                }
-                line.append(getQuote());
-            } else {
-                line.append(cell);
-            }
-            if (i < row.size() - 1) {
-                line.append(getDelimiter());
-            }
-        }
-        line.append("\r\n");
-        return line.toString();
-    }
-
-    public String toSingleLine(CSVRow row) {
-        return toSingleLine(row, row.size());
-    }
 }

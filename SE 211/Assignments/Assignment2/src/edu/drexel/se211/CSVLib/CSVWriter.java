@@ -21,11 +21,12 @@ public class CSVWriter {
 
     public void writeTable(CSVTable table) {
         try {
-            if (table.getHeaders() != null) {
-                writer.write(parser.toSingleLine(table.getHeaders(), table.getLongestRow()));
+            CSVRow headers = table.getHeaders();
+            if (headers != null) {
+                writer.write(headers.toString(parser, table.getLongestRow()));
             }
             for (CSVRow row : table.getRows()) {
-                writer.write(parser.toSingleLine(row, table.getLongestRow()));
+                writer.write(row.toString(parser, table.getLongestRow()));
             }
             writer.close();
         } catch (IOException e) {

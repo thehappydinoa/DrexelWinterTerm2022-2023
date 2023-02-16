@@ -50,18 +50,62 @@ public class CSVRow {
     public void removeCell(int index) {
         cells.remove(index);
     }
-    public void print(boolean bold) {
+    public String toString(char delimiter, char quote, char escape, int mostCells) {
         StringBuilder sb = new StringBuilder();
-        for (String cell : cells) {
-            if (bold) {
-                sb.append("\033[1m" + cell + "\033[0m");
-            } else {
-                sb.append(cell);
+
+        for (int i = 0; i < cells.size(); i++) {
+            if (i > 0) {
+                sb.append(delimiter);
             }
-            sb.append(",");
+            String cell = cells.get(i);
+            if (cell != null) {
+                boolean needsQuotes = cell.indexOf(delimiter) >= 0 || cell.indexOf(quote) >= 0 || cell.indexOf(escape) >= 0;
+                if (needsQuotes) {
+                    sb.append(quote);
+                    for (int j = 0; j < cell.length(); j++) {
+                        char c = cell.charAt(j);
+                        if (c == quote || c == escape) {
+                            sb.append(escape);
+                        }
+                        sb.append(c);
+                    }
+                    sb.append(quote);
+                } else {
+                    sb.append(cell);
+                }
+            }
         }
-        sb.deleteCharAt(sb.length() - 1);
-        System.out.println(sb.toString());
+
+        for (int i = cells.size(); i < mostCells; i++) {
+            sb.append(delimiter);
+        }
+
+        return sb.toString();
+    }
+
+    public String toString(char delimiter, char quote, char escape) {
+        return toString(delimiter, quote, escape, size());
+    }
+
+    public String toString(CSVParser parser) {
+        return toString(parser.getDelimiter(), parser.getQuote(), parser.getEscape());
+    }
+
+    public String toString(CSVParser parser, int mostCells) {
+        return toString(parser.getDelimiter(), parser.getQuote(), parser.getEscape(), mostCells);
+    }
+
+    public String toString() {
+        return toString(CSVParser.DEFAULT_DELIMITER, CSVParser.DEFAULT_QUOTE, CSVParser.DEFAULT_ESCAPE);
+    }
+
+    public void print(boolean bold) {
+        String s = toString();
+        if (bold) {
+            System.out.println("\033[1m" + s + "\033[0m");
+        } else {
+            System.out.println(s);
+        }
     }
 
     public void print() {
