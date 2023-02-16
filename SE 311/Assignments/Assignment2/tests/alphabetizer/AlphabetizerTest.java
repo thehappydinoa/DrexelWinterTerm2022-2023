@@ -1,3 +1,5 @@
+package alphabetizer;
+
 import alphabetizer.Alphabetizer;
 import filters.Pipe;
 import org.junit.jupiter.api.Test;

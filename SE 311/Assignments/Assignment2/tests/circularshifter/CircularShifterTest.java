@@ -1,3 +1,5 @@
+package circularshifter;
+
 import circularshifter.CircularShifter;
 import filters.Pipe;
 import org.junit.jupiter.api.Test;

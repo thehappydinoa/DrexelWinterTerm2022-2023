@@ -111,4 +111,8 @@ public class Settings {
         }
         return stopWordsList;
     }
+
+    public String getKeyword() {
+        return get("search.keyword");
+    }
 }
