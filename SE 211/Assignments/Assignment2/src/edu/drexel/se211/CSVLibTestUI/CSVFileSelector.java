@@ -63,6 +63,16 @@ public class CSVFileSelector {
         return fileChooser;
     }
 
+    public static File selectFile(JFrame frame) {
+        JFileChooser fileChooser = getjFileChooser();
+        int result = fileChooser.showOpenDialog(frame);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            return fileChooser.getSelectedFile();
+        } else {
+            return null;
+        }
+    }
+
     /**
      * Creates a new CSVFileSelector.
      */
@@ -144,15 +154,5 @@ public class CSVFileSelector {
      */
     private void openPreferences() {
         new CSVPreferences(getParser());
-    }
-
-    public static File selectFile(JFrame frame) {
-        JFileChooser fileChooser = getjFileChooser();
-        int result = fileChooser.showOpenDialog(frame);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            return fileChooser.getSelectedFile();
-        } else {
-            return null;
-        }
     }
 }

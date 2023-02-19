@@ -49,7 +49,7 @@ public class CSVParser {
      * escape and hasHeader values.
      *
      * @param delimiter the delimiter to use
-     * @param quote the quote to use
+     * @param quote     the quote to use
      */
     public CSVParser(char delimiter, char quote) {
         this(delimiter, quote, DEFAULT_ESCAPE);
@@ -60,8 +60,8 @@ public class CSVParser {
      * default hasHeader value.
      *
      * @param delimiter the delimiter to use
-     * @param quote the quote to use
-     * @param escape the escape to use
+     * @param quote     the quote to use
+     * @param escape    the escape to use
      */
     public CSVParser(char delimiter, char quote, char escape) {
         this(delimiter, quote, escape, DEFAULT_NULL);
@@ -72,8 +72,8 @@ public class CSVParser {
      * hasHeader values.
      *
      * @param delimiter the delimiter to use
-     * @param quote the quote to use
-     * @param escape the escape to use
+     * @param quote     the quote to use
+     * @param escape    the escape to use
      * @param nullValue the value to use for null values
      */
     public CSVParser(char delimiter, char quote, char escape, String nullValue) {
@@ -85,10 +85,10 @@ public class CSVParser {
      * hasHeader values.
      *
      * @param delimiter the delimiter to use
-     * @param quote the quote to use
-     * @param escape the escape to use
+     * @param quote     the quote to use
+     * @param escape    the escape to use
      * @param nullValue the value to use for null values
-     * @param newline the newline to use
+     * @param newline   the newline to use
      */
     public CSVParser(char delimiter, char quote, char escape, String nullValue, String newline) {
         this(delimiter, quote, escape, nullValue, newline, DEFAULT_HAS_HEADER);
@@ -99,12 +99,12 @@ public class CSVParser {
      * hasHeader values.
      *
      * @param delimiter the delimiter to use
-     * @param quote the quote to use
-     * @param escape the escape to use
+     * @param quote     the quote to use
+     * @param escape    the escape to use
      * @param nullValue the value to use for null values
-     * @param newline the newline to use
+     * @param newline   the newline to use
      * @param hasHeader whether the table read from the underlying reader has a
-     * header
+     *                  header
      */
     public CSVParser(char delimiter, char quote, char escape, String nullValue, String newline, boolean hasHeader) {
         this(delimiter, quote, escape, nullValue, newline, hasHeader, DEFAULT_SHOULD_DETECT_DELIMITER);
@@ -114,15 +114,15 @@ public class CSVParser {
      * Creates a new CSVParser with the given delimiter, quote, escape, and
      * hasHeader values.
      *
-     * @param delimiter the delimiter to use
-     * @param quote the quote to use
-     * @param escape the escape to use
-     * @param nullValue the value to use for null values
-     * @param newline the newline to use
-     * @param hasHeader whether the table read from the underlying reader has a
-     * header
+     * @param delimiter             the delimiter to use
+     * @param quote                 the quote to use
+     * @param escape                the escape to use
+     * @param nullValue             the value to use for null values
+     * @param newline               the newline to use
+     * @param hasHeader             whether the table read from the underlying reader has a
+     *                              header
      * @param shouldDetectDelimiter whether the parser should detect the delimiter
-     * automatically
+     *                              automatically
      */
     public CSVParser(char delimiter, char quote, char escape, String nullValue, String newline, boolean hasHeader, boolean shouldDetectDelimiter) {
         this.delimiter = delimiter;
@@ -239,7 +239,7 @@ public class CSVParser {
      * Sets whether the table read from the underlying reader has a header.
      *
      * @param hasHeader whether the table read from the underlying reader has a
-     * header
+     *                  header
      */
     public void setHasHeaders(boolean hasHeader) {
         this.hasHeader = hasHeader;
@@ -258,7 +258,7 @@ public class CSVParser {
      * Sets whether the parser should detect the delimiter automatically.
      *
      * @param shouldDetectDelimiter whether the parser should detect the
-     * delimiter automatically
+     *                              delimiter automatically
      */
     public void setDetectDelimiter(boolean shouldDetectDelimiter) {
         this.shouldDetectDelimiter = shouldDetectDelimiter;

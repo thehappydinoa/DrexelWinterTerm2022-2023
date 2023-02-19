@@ -22,7 +22,7 @@ public class CSVTable {
 
     /**
      * Creates a new CSVTable with the specified rows.
-     * 
+     *
      * @param rows The rows to add to the table.
      */
     public CSVTable(ArrayList<CSVRow> rows) {
@@ -32,8 +32,8 @@ public class CSVTable {
 
     /**
      * Creates a new CSVTable with the specified rows and headers.
-     * 
-     * @param rows The rows to add to the table.
+     *
+     * @param rows    The rows to add to the table.
      * @param headers The headers to add to the table.
      */
     public CSVTable(ArrayList<CSVRow> rows, CSVRow headers) {
@@ -43,8 +43,8 @@ public class CSVTable {
 
     /**
      * Creates a new CSVTable with the specified rows and headers.
-     * 
-     * @param rows The rows to add to the table.
+     *
+     * @param rows    The rows to add to the table.
      * @param headers The headers to add to the table.
      */
     public CSVTable(ArrayList<CSVRow> rows, ArrayList<String> headers) {
@@ -55,7 +55,7 @@ public class CSVTable {
 
     /**
      * Returns the headers.
-     * 
+     *
      * @return The headers.
      */
     public CSVRow getHeaders() {
@@ -63,8 +63,22 @@ public class CSVTable {
     }
 
     /**
+     * This method sets the headers of the CSV file to the given CSVRow object.
+     */
+    public void setHeaders(CSVRow headers) {
+        this.headers = headers;
+    }
+
+    /**
+     * This method sets the headers of the CSV file to the given ArrayList of Strings.
+     */
+    public void setHeaders(ArrayList<String> headers) {
+        this.headers = new CSVRow(headers);
+    }
+
+    /**
      * Returns the rows of the CSV file.
-     * 
+     *
      * @return the rows of the CSV file.
      */
     public ArrayList<CSVRow> getRows() {
@@ -72,16 +86,27 @@ public class CSVTable {
     }
 
     /**
+     * Sets the list of rows to the specified list of rows (not including headers).
+     *
+     * @param rows The list of rows to set the list of rows to (not including headers).
+     */
+    public void setRows(ArrayList<CSVRow> rows) {
+        this.rows = rows;
+        setLongestRow(findLongestRow());
+    }
+
+    /**
      * Returns the number of CSVRows in the CSVTable
-     * 
+     *
      * @return the number of CSVRows in the CSVTable
      */
     public int getRowSize() {
         return rows.size();
     }
+
     /**
      * Returns the CSVRow at the given index
-     * 
+     *
      * @param index the index of the CSVRow to return
      * @return the CSVRow at the given index
      */
@@ -94,7 +119,7 @@ public class CSVTable {
 
     /**
      * Returns the specified row (not including headers) with headers.
-     * 
+     *
      * @param index The index of the row (not including headers) to return.
      * @return The specified row (not including headers) with headers.
      */
@@ -104,7 +129,7 @@ public class CSVTable {
 
     /**
      * Returns all the rows (not including headers) with headers.
-     * 
+     *
      * @return All the rows (not including headers) with headers.
      */
     public ArrayList<CSVRowWithHeaders> getRowsWithHeaders() {
@@ -117,7 +142,7 @@ public class CSVTable {
 
     /**
      * Adds the specified row to the end of the list of rows.
-     * 
+     *
      * @param row The row to add to the end of the list of rows.
      */
 
@@ -130,9 +155,9 @@ public class CSVTable {
 
     /**
      * Sets the specified row to the specified row (not including headers).
-     * 
+     *
      * @param index The index of the row (not including headers) to set.
-     * @param row The row to set the specified row to (not including headers).
+     * @param row   The row to set the specified row to (not including headers).
      */
     public void setRow(int index, CSVRow row) {
         rows.set(index, row);
@@ -140,19 +165,10 @@ public class CSVTable {
             setLongestRow(row.size());
         }
     }
-    /**
-     * Sets the list of rows to the specified list of rows (not including headers).
-     * 
-     * @param rows The list of rows to set the list of rows to (not including headers).
-     */
-    public void setRows(ArrayList<CSVRow> rows) {
-        this.rows = rows;
-        setLongestRow(findLongestRow());
-    }
 
     /**
      * Removes the specified row (not including headers).
-     * 
+     *
      * @param index The index of the row (not including headers) to remove.
      */
     public void removeRow(int index) {
@@ -168,8 +184,9 @@ public class CSVTable {
         }
     }
 
-    /** 
+    /**
      * Removes a row from the CSVTable
+     *
      * @param row the row to be removed
      */
     public void removeRow(CSVRow row) {
@@ -178,6 +195,7 @@ public class CSVTable {
 
     /**
      * Finds the length of the longest row in the CSVTable
+     *
      * @return the length of the longest row
      */
     private int findLongestRow() {
@@ -192,6 +210,7 @@ public class CSVTable {
 
     /**
      * Gets the length of the longest row in the CSVTable
+     *
      * @return the length of the longest row
      */
     public int getLongestRow() {
@@ -200,6 +219,7 @@ public class CSVTable {
 
     /**
      * Sets the length of the longest row in the CSVTable
+     *
      * @param longestRow the length of the longest row
      */
     public void setLongestRow(int longestRow) {
@@ -217,20 +237,6 @@ public class CSVTable {
      */
     public boolean hasHeaders() {
         return headers != null;
-    }
-
-    /**
-     * This method sets the headers of the CSV file to the given CSVRow object.
-     */
-    public void setHeaders(CSVRow headers) {
-        this.headers = headers;
-    }
-
-    /**
-     * This method sets the headers of the CSV file to the given ArrayList of Strings.
-     */
-    public void setHeaders(ArrayList<String> headers) {
-        this.headers = new CSVRow(headers);
     }
 
     /**

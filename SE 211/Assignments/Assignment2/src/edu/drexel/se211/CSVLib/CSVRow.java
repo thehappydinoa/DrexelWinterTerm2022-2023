@@ -20,18 +20,17 @@ public class CSVRow {
 
     /**
      * Creates a new CSVRow with the specified number of cells.
+     *
      * @param size The number of cells to create.
      */
     public CSVRow(int size) {
         this(new ArrayList<>(size));
-        // Fill with nulls
-        for (int i = 0; i < size; i++) {
-            cells.add(null);
-        }
+        fillCells(size);
     }
 
     /**
      * Creates a new CSVRow with the specified cells.
+     *
      * @param cells The cells to add to the row.
      */
     public CSVRow(ArrayList<String> cells) {
@@ -42,6 +41,7 @@ public class CSVRow {
 
     /**
      * Returns the cells in the row.
+     *
      * @return The cells in the row.
      */
     public ArrayList<String> getCells() {
@@ -49,23 +49,8 @@ public class CSVRow {
     }
 
     /**
-     * Returns the number of cells in the row.
-     * @return The number of cells in the row.
-     */
-    public int size() {
-        return cells.size();
-    }
-
-    /**
-     * Adds a cell to the end of the row.
-     * @param cell The cell to add.
-     */
-    public void addCell(String cell) {
-        cells.add(cell);
-    }
-
-    /**
      * Sets the cells in the row.
+     *
      * @param cells The cells to set.
      */
     public void setCells(ArrayList<String> cells) {
@@ -74,28 +59,57 @@ public class CSVRow {
 
     /**
      * Sets the cells in the row.
+     *
      * @param cells The cells to set.
-     * @param size The number of cells to set.
+     * @param size  The number of cells to set.
      */
     public void setCells(ArrayList<String> cells, int size) {
-        this.cells = cells;
-        while (this.cells.size() < size) {
-            this.cells.add(null);
+        setCells(cells);
+        fillCells(size);
+    }
+
+    /**
+     * Fill the row with null cells until it has the specified size.
+     *
+     * @param size      The size to fill the row to.
+     * @param nullValue The value to fill the cells with.
+     */
+    public void fillCells(int size, String nullValue) {
+        while (cells.size() < size) {
+            cells.add(nullValue);
         }
     }
 
     /**
      * Fill the row with null cells until it has the specified size.
+     *
      * @param size The size to fill the row to.
      */
     public void fillCells(int size) {
-        while (cells.size() < size) {
-            cells.add(null);
-        }
+        fillCells(size, null);
+    }
+
+    /**
+     * Returns the number of cells in the row.
+     *
+     * @return The number of cells in the row.
+     */
+    public int size() {
+        return cells.size();
+    }
+
+    /**
+     * Adds a cell to the end of the row.
+     *
+     * @param cell The cell to add.
+     */
+    public void addCell(String cell) {
+        cells.add(cell);
     }
 
     /**
      * Returns the cell at the specified index.
+     *
      * @param index The index of the cell to get.
      * @return The cell at the specified index.
      * @see #getCell(int)
@@ -106,6 +120,7 @@ public class CSVRow {
 
     /**
      * Returns the cell at the specified index.
+     *
      * @param index The index of the cell to get.
      * @return The cell at the specified index.
      */
@@ -115,7 +130,8 @@ public class CSVRow {
 
     /**
      * Returns the cell at the specified index, or the specified default value if the index is out of bounds.
-     * @param index The index of the cell to get.
+     *
+     * @param index        The index of the cell to get.
      * @param defaultValue The value to return if the index is out of bounds.
      * @return The cell at the specified index, or the specified default value if the index is out of bounds.
      */
@@ -132,8 +148,9 @@ public class CSVRow {
 
     /**
      * Sets the cell at the specified index.
+     *
      * @param index The index of the cell to set.
-     * @param cell The cell to set.
+     * @param cell  The cell to set.
      */
     public void setCell(int index, String cell) {
         // If the index is out of bounds, add null cells until it's not
@@ -145,6 +162,7 @@ public class CSVRow {
 
     /**
      * Removes the cell at the specified index.
+     *
      * @param index The index of the cell to remove.
      */
     public void removeCell(int index) {
@@ -153,11 +171,12 @@ public class CSVRow {
 
     /**
      * Returns the row as a string.
+     *
      * @param delimiter The delimiter to use.
-     * @param quote The quote character to use.
-     * @param escape The escape character to use.
+     * @param quote     The quote character to use.
+     * @param escape    The escape character to use.
      * @param nullValue The value to use for null cells.
-     * @param newLine The new line character to use.
+     * @param newLine   The new line character to use.
      * @param mostCells The most cells in any row.
      * @return The row as a string.
      */
@@ -194,11 +213,12 @@ public class CSVRow {
 
     /**
      * Returns the row as a string.
+     *
      * @param delimiter The delimiter to use.
-     * @param quote The quote character to use.
-     * @param escape The escape character to use.
+     * @param quote     The quote character to use.
+     * @param escape    The escape character to use.
      * @param nullValue The value to use for null cells.
-     * @param newLine The new line character to use.
+     * @param newLine   The new line character to use.
      * @return The row as a string.
      */
     public String toString(char delimiter, char quote, char escape, String nullValue, String newLine) {
@@ -207,9 +227,10 @@ public class CSVRow {
 
     /**
      * Returns the row as a string.
+     *
      * @param delimiter The delimiter to use.
-     * @param quote The quote character to use.
-     * @param escape The escape character to use.
+     * @param quote     The quote character to use.
+     * @param escape    The escape character to use.
      * @param nullValue The value to use for null cells.
      * @return The row as a string.
      */
@@ -219,9 +240,10 @@ public class CSVRow {
 
     /**
      * Returns the row as a string.
+     *
      * @param delimiter The delimiter to use.
-     * @param quote The quote character to use.
-     * @param escape The escape character to use.
+     * @param quote     The quote character to use.
+     * @param escape    The escape character to use.
      * @return The row as a string.
      */
     public String toString(char delimiter, char quote, char escape) {
@@ -230,8 +252,9 @@ public class CSVRow {
 
     /**
      * Returns the row as a string.
+     *
      * @param delimiter The delimiter to use.
-     * @param quote The quote character to use.
+     * @param quote     The quote character to use.
      * @return The row as a string.
      */
     public String toString(char delimiter, char quote) {
@@ -240,6 +263,7 @@ public class CSVRow {
 
     /**
      * Returns the row as a string.
+     *
      * @param delimiter The delimiter to use.
      * @return The row as a string.
      */
@@ -249,6 +273,7 @@ public class CSVRow {
 
     /**
      * Returns the row as a string.
+     *
      * @return The row as a string.
      */
     public String toString() {
@@ -257,6 +282,7 @@ public class CSVRow {
 
     /**
      * Returns the row as a string.
+     *
      * @param mostCells The most cells in any row.
      * @return The row as a string.
      */
@@ -266,6 +292,7 @@ public class CSVRow {
 
     /**
      * Returns the row as a string.
+     *
      * @param parser The parser to use.
      * @return The row as a string.
      */
@@ -275,7 +302,8 @@ public class CSVRow {
 
     /**
      * Returns the row as a string.
-     * @param parser The parser to use.
+     *
+     * @param parser    The parser to use.
      * @param mostCells The most cells in any row.
      * @return The row as a string.
      */
@@ -285,6 +313,7 @@ public class CSVRow {
 
     /**
      * Prints the row to the console.
+     *
      * @param bold Whether to print the row in bold.
      */
     public void print(boolean bold) {

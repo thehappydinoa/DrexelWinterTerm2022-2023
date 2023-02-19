@@ -29,7 +29,7 @@ public class CSVReader {
      * Creates a new CSVReader.
      *
      * @param filename the name of the file to read from
-     * @param parser the parser to use
+     * @param parser   the parser to use
      * @throws FileNotFoundException if the file does not exist
      */
     public CSVReader(String filename, CSVParser parser) throws FileNotFoundException {
@@ -49,8 +49,8 @@ public class CSVReader {
     /**
      * Creates a new CSVReader.
      *
-     * @param parser the parser to use
-     * @param reader the reader to use
+     * @param parser    the parser to use
+     * @param reader    the reader to use
      * @param hasHeader whether the table read from the underlying reader has a header
      */
     public CSVReader(CSVParser parser, BufferedReader reader, boolean hasHeader) {

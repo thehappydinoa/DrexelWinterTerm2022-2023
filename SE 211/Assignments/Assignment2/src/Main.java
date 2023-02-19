@@ -4,7 +4,7 @@ import javax.swing.UIManager;
 
 /**
  * The main class for the CSVLibTestUI application.
- * 
+ *
  * @author Aidan Holland (adh346)
  */
 public class Main {

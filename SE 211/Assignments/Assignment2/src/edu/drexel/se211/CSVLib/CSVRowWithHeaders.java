@@ -22,7 +22,7 @@ public class CSVRowWithHeaders extends CSVRow {
     /**
      * Creates a new CSVRowWithHeaders with the specified cells.
      *
-     * @param row The row to add to the table.
+     * @param row     The row to add to the table.
      * @param headers The headers to add to the table.
      */
     public CSVRowWithHeaders(CSVRow row, CSVRow headers) {
@@ -33,7 +33,7 @@ public class CSVRowWithHeaders extends CSVRow {
     /**
      * Creates a new CSVRowWithHeaders with the specified cells.
      *
-     * @param cells The cells to add to the row.
+     * @param cells   The cells to add to the row.
      * @param headers The headers to add to the table.
      */
     public CSVRowWithHeaders(ArrayList<String> cells, CSVRow headers) {
@@ -43,6 +43,7 @@ public class CSVRowWithHeaders extends CSVRow {
 
     /**
      * Creates a new CSVRowWithHeaders with the specified cells.
+     *
      * @param cells The cells to add to the row.
      */
     public CSVRowWithHeaders(ArrayList<String> cells, ArrayList<String> headers) {
@@ -54,6 +55,7 @@ public class CSVRowWithHeaders extends CSVRow {
 
     /**
      * Returns the headers.
+     *
      * @return The headers.
      */
     public CSVRow getHeaders() {
@@ -62,6 +64,7 @@ public class CSVRowWithHeaders extends CSVRow {
 
     /**
      * Sets the headers.
+     *
      * @param headers The headers.
      */
     public void setHeaders(CSVRow headers) {
@@ -70,6 +73,7 @@ public class CSVRowWithHeaders extends CSVRow {
 
     /**
      * Sets the headers.
+     *
      * @param headers The headers.
      */
     public void setHeaders(ArrayList<String> headers) {
@@ -78,6 +82,7 @@ public class CSVRowWithHeaders extends CSVRow {
 
     /**
      * Returns the header at the specified index.
+     *
      * @param index The index of the header to return.
      * @return The header at the specified index.
      */
@@ -87,6 +92,7 @@ public class CSVRowWithHeaders extends CSVRow {
 
     /**
      * Returns the header index of the specified header.
+     *
      * @param header The header to search for.
      * @return The header at the specified index.
      */
@@ -97,7 +103,7 @@ public class CSVRowWithHeaders extends CSVRow {
     /**
      * Returns the header at the specified index.
      *
-     * @param header The header to search for.
+     * @param header     The header to search for.
      * @param ignoreCase Whether to ignore case when searching for the header.
      * @return The header at the specified index.
      */
@@ -116,6 +122,7 @@ public class CSVRowWithHeaders extends CSVRow {
 
     /**
      * Returns the number of headers.
+     *
      * @return The number of headers.
      */
     public int getHeaderCount() {
