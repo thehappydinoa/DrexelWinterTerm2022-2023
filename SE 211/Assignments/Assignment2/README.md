@@ -11,61 +11,24 @@ library, and error recovery.
 
 ## Requirement Specifications
 
-- [ ] The library should be able to read a CSV file and return a list of
-      records. Each record should be a list of strings.
-- [ ] The library should be able to write a list of records to a CSV file.
-- [ ] The library should be able to handle CSV files with a variable number
-      of fields per record.
-- [ ] The library should be able to detect the field separator character.
-- [ ] The library should be able to handle CSV files with quoted fields.
-- [ ] The library should be able to handle CSV files with quoted fields that
-      contain the field separator character.
-- [ ] The library should be able to handle CSV files with quoted fields that
-      contain newlines.
-- [ ] The library should be able to display a list of records in a human-readable format.
-- [ ] The library should be able to filter the columns of a list of records.
-- [ ] The library should be able to handle CSV files with a field separator
-      character that is not a comma.
-- [ ] The library should be able to recover from errors in the CSV file.
-
-## Tests
-
-The following test cases should be used to test your library:
-
-- [ ] Test case 1: Read a CSV file with a single record and a single field.
-- [ ] Test case 2: Read a CSV file with a single record and multiple fields.
-- [ ] Test case 3: Read a CSV file with multiple records and multiple fields.
-- [ ] Test case 4: Read a CSV file with a variable number of fields per record.
-- [ ] Test case 5: Read a CSV file with a field separator character that is
-      not a comma.
-- [ ] Test case 6: Read a CSV file with quoted fields.
-- [ ] Test case 7: Read a CSV file with quoted fields that contain the field
-      separator character.
-- [ ] Test case 8: Read a CSV file with quoted fields that contain newlines.
-- [ ] Test case 9: Write a CSV file with a single record and a single field.
-- [ ] Test case 10: Write a CSV file with a single record and multiple fields.
-- [ ] Test case 11: Write a CSV file with multiple records and multiple fields.
-- [ ] Test case 12: Write a CSV file with a variable number of fields per
-      record.
-- [ ] Test case 13: Write a CSV file with a field separator character that is
-      not a comma.
-- [ ] Test case 14: Write a CSV file with quoted fields.
-- [ ] Test case 15: Write a CSV file with quoted fields that contain the field
-      separator character.
-- [ ] Test case 16: Write a CSV file with quoted fields that contain newlines.
-- [ ] Test case 17: Read a CSV file with a field separator character that is
-      not a comma and write it back out.
-- [ ] Test case 18: Read a CSV file with quoted fields and write it back out.
-- [ ] Test case 19: Read a CSV file with quoted fields that contain the field
-      separator character and write it back out.
-- [ ] Test case 20: Read a CSV file, filter the columns, and write it back out.
-- [ ] Test case 21: Read a CSV file, filter the columns, and display it in a
-      human-readable format.
+See [REQUIREMENTS.md](REQUIREMENTS.md).
 
 ## UML
 
 ![UML Diagram](uml.png)
 
+## Test UI
+
+The test UI is a simple Java Swing application that allows you to test the
+CSV library. It is located in the `src/edu/drexel/se211/CSVLibTestUI` folder.
+
+### Usage
+
+1. Open the project in IntelliJ.
+2. Run the `edu.drexel.se211.Main` class.
+3. Select a CSV file to open.
+
 ## Known Issues
 
-N/A
+- Adding Rows from the Test UI will only add them to the bottom of the table.
+- Sometimes clicks are handled twice, causing a visual glitch.
