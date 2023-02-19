@@ -1,16 +1,24 @@
-import edu.drexel.se211.CSVLib.CSVReader;
-import edu.drexel.se211.CSVLib.CSVTable;
+import edu.drexel.se211.CSVLib.ui.CSVFileSelector;
+
+import javax.swing.UIManager;
 
 public class Main {
     public static void main(String[] args) {
-        String filename = "example.csv";
+        // Take the menu bar off the frame
+        System.setProperty("com.apple.macos.useScreenMenuBar", "true");
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+
+        // Set the name of the application menu item
+        System.setProperty("com.apple.mrj.application.apple.menu.about.name", "CSVLib");
+
+        // Set the look and feel
         try {
-            CSVReader reader = new CSVReader(filename);
-            reader.setHasHeader(true);
-            CSVTable table = reader.readTable();
-            table.print();
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
+
+        // Open the file selector
+        new CSVFileSelector();
     }
 }

@@ -22,8 +22,7 @@ library, and error recovery.
       contain the field separator character.
 - [ ] The library should be able to handle CSV files with quoted fields that
       contain newlines.
-- [ ] The library should be able to display a list of records in a human
-      readable format.
+- [ ] The library should be able to display a list of records in a human-readable format.
 - [ ] The library should be able to filter the columns of a list of records.
 - [ ] The library should be able to handle CSV files with a field separator
       character that is not a comma.
@@ -61,7 +60,7 @@ The following test cases should be used to test your library:
       separator character and write it back out.
 - [ ] Test case 20: Read a CSV file, filter the columns, and write it back out.
 - [ ] Test case 21: Read a CSV file, filter the columns, and display it in a
-      human readable format.
+      human-readable format.
 
 ## UML
 

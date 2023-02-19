@@ -59,7 +59,7 @@ public class CSVRow {
     public void removeCell(int index) {
         cells.remove(index);
     }
-    public String toString(char delimiter, char quote, char escape, int mostCells) {
+    public String toString(char delimiter, char quote, char escape, String nullValue, String newLine, int mostCells) {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < cells.size(); i++) {
@@ -85,15 +85,17 @@ public class CSVRow {
             }
         }
 
-        for (int i = cells.size(); i < mostCells; i++) {
-            sb.append(delimiter);
-        }
-        sb.append("\r\n");
+        sb.append((nullValue + delimiter).repeat(Math.max(0, mostCells - cells.size())));
+        sb.append(newLine);
         return sb.toString();
     }
 
+
+    public String toString(int mostCells) {
+        return toString(CSVParser.DEFAULT_DELIMITER, CSVParser.DEFAULT_QUOTE, CSVParser.DEFAULT_ESCAPE, CSVParser.DEFAULT_NULL, CSVParser.DEFAULT_NEWLINE, mostCells);
+    }
     public String toString(char delimiter, char quote, char escape) {
-        return toString(delimiter, quote, escape, size());
+        return toString(delimiter, quote, escape, CSVParser.DEFAULT_NULL, CSVParser.DEFAULT_NEWLINE, size());
     }
 
     public String toString(CSVParser parser) {
@@ -101,11 +103,11 @@ public class CSVRow {
     }
 
     public String toString(CSVParser parser, int mostCells) {
-        return toString(parser.getDelimiter(), parser.getQuote(), parser.getEscape(), mostCells);
+        return toString(parser.getDelimiter(), parser.getQuote(), parser.getEscape(), parser.getNullValue(), parser.getNewline(), mostCells);
     }
 
     public String toString() {
-        return toString(CSVParser.DEFAULT_DELIMITER, CSVParser.DEFAULT_QUOTE, CSVParser.DEFAULT_ESCAPE);
+        return toString(CSVParser.DEFAULT_DELIMITER, CSVParser.DEFAULT_QUOTE, CSVParser.DEFAULT_ESCAPE, CSVParser.DEFAULT_NULL, CSVParser.DEFAULT_NEWLINE, size());
     }
 
     public void print(boolean bold) {

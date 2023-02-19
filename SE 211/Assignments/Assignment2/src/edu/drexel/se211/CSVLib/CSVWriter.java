@@ -6,8 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class CSVWriter {
-    private CSVParser parser;
-    private BufferedWriter writer;
+    private final CSVParser parser;
+    private final BufferedWriter writer;
 
     public CSVWriter(String filename) throws IOException {
         this(new CSVParser(), new BufferedWriter(new FileWriter(filename)));

@@ -1,12 +1,10 @@
-package edu.drexel.se211.CSVLib;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.util.ArrayList;
-
+import edu.drexel.se211.CSVLib.CSVParser;
+import edu.drexel.se211.CSVLib.CSVRow;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 class CSVRowTest {
 
@@ -24,7 +22,7 @@ class CSVRowTest {
         cells.add("cell2");
         csvRow.setCells(cells);
 
-        assertEquals(cells, csvRow.getCells());
+        Assertions.assertEquals(cells, csvRow.getCells());
     }
 
     @Test
@@ -32,15 +30,15 @@ class CSVRowTest {
         csvRow.addCell("cell1");
         csvRow.addCell("cell2");
 
-        assertEquals(2, csvRow.size());
+        Assertions.assertEquals(2, csvRow.size());
     }
 
     @Test
     void testAddCell() {
         csvRow.addCell("cell1");
 
-        assertEquals(1, csvRow.size());
-        assertEquals("cell1", csvRow.getCell(0));
+        Assertions.assertEquals(1, csvRow.size());
+        Assertions.assertEquals("cell1", csvRow.getCell(0));
     }
 
     @Test
@@ -50,7 +48,7 @@ class CSVRowTest {
         cells.add("cell2");
         csvRow.setCells(cells);
 
-        assertEquals(cells, csvRow.getCells());
+        Assertions.assertEquals(cells, csvRow.getCells());
     }
 
     @Test
@@ -58,8 +56,8 @@ class CSVRowTest {
         csvRow.addCell("cell1");
         csvRow.addCell("cell2");
 
-        assertEquals("cell1", csvRow.getCell(0));
-        assertEquals("cell2", csvRow.getCell(1));
+        Assertions.assertEquals("cell1", csvRow.getCell(0));
+        Assertions.assertEquals("cell2", csvRow.getCell(1));
     }
 
     @Test
@@ -68,7 +66,7 @@ class CSVRowTest {
         csvRow.addCell("cell2");
         csvRow.setCell(1, "cell3");
 
-        assertEquals("cell3", csvRow.getCell(1));
+        Assertions.assertEquals("cell3", csvRow.getCell(1));
     }
 
     @Test
@@ -77,18 +75,18 @@ class CSVRowTest {
         csvRow.addCell("cell2");
         csvRow.removeCell(1);
 
-        assertEquals(1, csvRow.size());
-        assertEquals("cell1", csvRow.getCell(0));
+        Assertions.assertEquals(1, csvRow.size());
+        Assertions.assertEquals("cell1", csvRow.getCell(0));
     }
 
     @Test
     void testRemoveCellThrowsException() {
-        assertThrows(IndexOutOfBoundsException.class, () -> csvRow.removeCell(0));
+        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> csvRow.removeCell(0));
     }
 
     @Test
     void testGetCellThrowsException() {
-        assertThrows(IndexOutOfBoundsException.class, () -> csvRow.getCell(0));
+        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> csvRow.getCell(0));
     }
 
     @Test
@@ -96,7 +94,7 @@ class CSVRowTest {
         csvRow.addCell("cell1");
         csvRow.addCell("cell2");
 
-        assertEquals("cell1,cell2", csvRow.toString(',', '"', '\\'));
+        Assertions.assertEquals("cell1,cell2\r\n", csvRow.toString(',', '"', '\\'));
     }
 
     @Test
@@ -105,7 +103,7 @@ class CSVRowTest {
         csvRow.addCell(null);
         csvRow.addCell("cell2");
 
-        assertEquals("cell1,,cell2", csvRow.toString(',', '"', '\\'));
+        Assertions.assertEquals("cell1,,cell2\r\n", csvRow.toString(',', '"', '\\'));
     }
 
     @Test
@@ -114,7 +112,7 @@ class CSVRowTest {
         csvRow.addCell("cell,2");
         csvRow.addCell("cell2");
 
-        assertEquals("cell1,\"cell,2\",cell2", csvRow.toString(',', '"', '\\'));
+        Assertions.assertEquals("cell1,\"cell,2\",cell2\r\n", csvRow.toString(',', '"', '\\'));
     }
 
     @Test
@@ -123,7 +121,7 @@ class CSVRowTest {
         csvRow.addCell("cell\"2");
         csvRow.addCell("cell2");
 
-        assertEquals("cell1,\"cell\\\"2\",cell2", csvRow.toString(',', '"', '\\'));
+        Assertions.assertEquals("cell1,\"cell\\\"2\",cell2\r\n", csvRow.toString(',', '"', '\\'));
     }
 
     @Test
@@ -132,12 +130,12 @@ class CSVRowTest {
         csvRow.addCell("cell\\2");
         csvRow.addCell("cell2");
 
-        assertEquals("cell1,\"cell\\\\2\",cell2", csvRow.toString(',', '"', '\\'));
+        Assertions.assertEquals("cell1,\"cell\\\\2\",cell2\r\n", csvRow.toString());
     }
 
     @Test
     void testToStringForEmptyRow() {
-        assertEquals("", csvRow.toString());
+        Assertions.assertEquals("\r\n", csvRow.toString());
     }
 
     @Test
@@ -146,7 +144,7 @@ class CSVRowTest {
         csvRow.addCell("");
         csvRow.addCell("cell2");
 
-        assertEquals("cell1,,cell2,", csvRow.toString(',', '"', '\\', 4));
+        Assertions.assertEquals("cell1,,cell2,\r\n", csvRow.toString(4));
     }
 
     @Test
@@ -154,6 +152,6 @@ class CSVRowTest {
         csvRow.addCell("cell1");
         csvRow.addCell("cell2");
 
-        assertEquals("cell1,cell2", csvRow.toString(',', '"', '\\', 2));
+        Assertions.assertEquals("cell1,cell2\r\n", csvRow.toString(new CSVParser()));
     }
 }

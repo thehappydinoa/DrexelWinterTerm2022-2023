@@ -5,7 +5,7 @@
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
       </element>
-      <element id="module-output" name="Assignment2" />
+      <element id="module-output" name="A2_adh346_Aidan-Holland_14387995" />
     </root>
   </artifact>
 </component>
