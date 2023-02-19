@@ -82,44 +82,44 @@ class CSVParserTest {
     void testParseLine() throws CSVParseException {
         CSVRow row = parser.parseLine("a,b,c");
         Assertions.assertEquals(3, row.size());
-        Assertions.assertEquals("a", row.get(0));
-        Assertions.assertEquals("b", row.get(1));
-        Assertions.assertEquals("c", row.get(2));
+        Assertions.assertEquals("a", row.getCell(0));
+        Assertions.assertEquals("b", row.getCell(1));
+        Assertions.assertEquals("c", row.getCell(2));
     }
 
     @Test
     void testParseLineWithQuotes() throws CSVParseException {
         CSVRow row = parser.parseLine("\"a\",\"b\",\"c\"");
         Assertions.assertEquals(3, row.size());
-        Assertions.assertEquals("a", row.get(0));
-        Assertions.assertEquals("b", row.get(1));
-        Assertions.assertEquals("c", row.get(2));
+        Assertions.assertEquals("a", row.getCell(0));
+        Assertions.assertEquals("b", row.getCell(1));
+        Assertions.assertEquals("c", row.getCell(2));
     }
 
     @Test
     void testParseLineWithEscapedQuotes() throws CSVParseException {
         CSVRow row = parser.parseLine("\"a\",\"b\",\"c\\\"\"");
         Assertions.assertEquals(3, row.size());
-        Assertions.assertEquals("a", row.get(0));
-        Assertions.assertEquals("b", row.get(1));
-        Assertions.assertEquals("c\"", row.get(2));
+        Assertions.assertEquals("a", row.getCell(0));
+        Assertions.assertEquals("b", row.getCell(1));
+        Assertions.assertEquals("c\"", row.getCell(2));
     }
 
     @Test
     void testParseLineWithEscapedEscape() throws CSVParseException {
         CSVRow row = parser.parseLine("\"a\",\"b\",\"c\\\\\"");
         Assertions.assertEquals(3, row.size());
-        Assertions.assertEquals("a", row.get(0));
-        Assertions.assertEquals("b", row.get(1));
-        Assertions.assertEquals("c\\", row.get(2));
+        Assertions.assertEquals("a", row.getCell(0));
+        Assertions.assertEquals("b", row.getCell(1));
+        Assertions.assertEquals("c\\", row.getCell(2));
     }
 
     @Test
     void testParseLineWithEscapedDelimiter() throws CSVParseException {
         CSVRow row = parser.parseLine("\"a\",\"b\",\"c\\,\"");
         Assertions.assertEquals(3, row.size());
-        Assertions.assertEquals("a", row.get(0));
-        Assertions.assertEquals("b", row.get(1));
-        Assertions.assertEquals("c,", row.get(2));
+        Assertions.assertEquals("a", row.getCell(0));
+        Assertions.assertEquals("b", row.getCell(1));
+        Assertions.assertEquals("c,", row.getCell(2));
     }
 }

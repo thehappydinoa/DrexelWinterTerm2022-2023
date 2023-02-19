@@ -3,8 +3,7 @@ package edu.drexel.se211.CSVLib;
 import java.util.HashMap;
 
 /**
- * A CSVRowWithHeaders is a CSVRow that also contains a reference to the headers
- * of the CSV file.
+ * A parser for CSV files.
  */
 public class CSVParser {
     // Constants

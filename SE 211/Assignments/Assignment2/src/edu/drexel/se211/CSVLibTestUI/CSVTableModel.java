@@ -1,4 +1,4 @@
-package edu.drexel.se211.CSVLib.ui;
+package edu.drexel.se211.CSVLibTestUI;
 
 import edu.drexel.se211.CSVLib.CSVRow;
 import edu.drexel.se211.CSVLib.CSVTable;

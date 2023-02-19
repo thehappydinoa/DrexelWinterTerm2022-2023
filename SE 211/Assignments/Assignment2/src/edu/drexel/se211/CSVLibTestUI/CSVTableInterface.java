@@ -1,4 +1,4 @@
-package edu.drexel.se211.CSVLib.ui;
+package edu.drexel.se211.CSVLibTestUI;
 
 import edu.drexel.se211.CSVLib.CSVReader;
 import edu.drexel.se211.CSVLib.CSVTable;
@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.Objects;
 
 
 public class CSVTableInterface {
@@ -35,9 +36,7 @@ public class CSVTableInterface {
         jtable.setFillsViewportHeight(true);
 
         // Listen for changes to the table
-        model.addTableModelListener(event -> {
-            setSaved(false);
-        });
+        model.addTableModelListener(event -> setSaved(false));
 
         // Add right-click menu to JTable
         JPopupMenu popupMenu = new JPopupMenu();
@@ -96,7 +95,7 @@ public class CSVTableInterface {
         if (!isSaved()) {
             title += "*";
         }
-        if (jframe != null && jframe.getTitle() != title) {
+        if (jframe != null && !Objects.equals(jframe.getTitle(), title)) {
             jframe.setTitle(title);
         }
     }

@@ -1,9 +1,9 @@
-import edu.drexel.se211.CSVLib.ui.CSVFileSelector;
+import edu.drexel.se211.CSVLibTestUI.CSVFileSelector;
 
 import javax.swing.UIManager;
 
 /**
- * The main class for the CSVLib application.
+ * The main class for the CSVLibTestUI application.
  * 
  * @author Aidan Holland (adh346)
  */
