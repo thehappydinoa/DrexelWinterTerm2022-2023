@@ -10,6 +10,13 @@ public class CSVRow {
     public CSVRow() {
         this(new ArrayList<>());
     }
+    public CSVRow(int size) {
+        this(new ArrayList<>(size));
+        // Fill with nulls
+        for (int i = 0; i < size; i++) {
+            cells.add(null);
+        }
+    }
     public CSVRow(ArrayList<String> cells) {
         this.cells = cells;
     }

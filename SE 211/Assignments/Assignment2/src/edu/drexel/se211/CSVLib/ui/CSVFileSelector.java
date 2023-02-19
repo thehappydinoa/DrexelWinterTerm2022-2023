@@ -29,16 +29,16 @@ public class CSVFileSelector {
         JMenuBar menuBar = createMenuBar();
         jframe.setJMenuBar(menuBar);
 
-        // Create a new panel to hold the button
+        // Create a new centered panel to hold the button
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(Box.createVerticalGlue());
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panel.add(new JLabel("Select a CSV file to open:"));
 
         // Create a new button
         JButton openButton = new JButton("Open CSV File");
         openButton.addActionListener(event -> openFile(getjFileChooser()));
         panel.add(openButton);
-        panel.add(Box.createVerticalGlue());
 
         // Add the panel to the frame
         jframe.add(panel, BorderLayout.CENTER);
@@ -70,7 +70,7 @@ public class CSVFileSelector {
         JFrame frame = new JFrame();
         frame.setTitle("CSV File Selector");
         frame.setLayout(new BorderLayout());
-        frame.setPreferredSize(new Dimension(400, 300));
+        frame.setPreferredSize(new Dimension(400, 120));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         return frame;
     }

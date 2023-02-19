@@ -1,18 +1,14 @@
 package edu.drexel.se211.CSVLib.ui;
 
 import edu.drexel.se211.CSVLib.CSVReader;
-import edu.drexel.se211.CSVLib.CSVRow;
 import edu.drexel.se211.CSVLib.CSVTable;
 import edu.drexel.se211.CSVLib.CSVWriter;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-
-import static javax.swing.event.TableModelEvent.*;
 
 
 public class CSVTableInterface {
@@ -20,6 +16,7 @@ public class CSVTableInterface {
     private final JFrame jframe;
     private final JTable jtable;
     private final String filename;
+    private boolean isSaved = true;
 
     public CSVTableInterface(CSVTable table, String filename) {
         this.table = table;
@@ -31,34 +28,15 @@ public class CSVTableInterface {
         jframe.setJMenuBar(menuBar);
 
         // Create table model
-        DefaultTableModel model = new DefaultTableModel(table.to2DArray(), table.getHeaders().getCells().toArray());
+        CSVTableModel model = new CSVTableModel(table);
 
         // Create table
         jtable = new JTable(model);
         jtable.setFillsViewportHeight(true);
 
-        // Update table when cell is edited
-        jtable.getModel().addTableModelListener(event -> {
-            int row = event.getFirstRow();
-            int column = event.getColumn();
-            int eventType = event.getType();
-            if (eventType != INSERT) {
-                if (row > table.getRowCount() - 1) {
-                    table.addRow(new CSVRow());
-                } else if (column == -1) {
-                    table.addRow(new CSVRow());
-                } else {
-                    String value = (String) jtable.getModel().getValueAt(row, column);
-                    table.getRow(row).setCell(column, value);
-                }
-            } else //noinspection ConstantValue
-                if (eventType == UPDATE) {
-                String value = (String) jtable.getModel().getValueAt(row, column);
-                table.getRow(row).setCell(column, value);
-            } else //noinspection ConstantValue
-                    if (eventType == DELETE) {
-                table.removeRow(row);
-            }
+        // Listen for changes to the table
+        model.addTableModelListener(event -> {
+            setSaved(false);
         });
 
         // Add right-click menu to JTable
@@ -97,6 +75,8 @@ public class CSVTableInterface {
                 if (row >= 0 && col >= 0) {
                     jtable.setRowSelectionInterval(row, row);
                     jtable.setColumnSelectionInterval(col, col);
+                } else {
+                    jtable.clearSelection();
                 }
             }
         });
@@ -106,6 +86,37 @@ public class CSVTableInterface {
 
         // Show frame
         showFrame(jframe);
+    }
+
+    private void updateTitle(JFrame jframe) {
+        String title = "CSV Table Editor";
+        if (filename != null) {
+            title += " - " + new File(filename).getName();
+        }
+        if (!isSaved()) {
+            title += "*";
+        }
+        if (jframe != null && jframe.getTitle() != title) {
+            jframe.setTitle(title);
+        }
+    }
+
+    private void updateTitle() {
+        updateTitle(jframe);
+    }
+
+    private JFrame createFrame() {
+        JFrame frame = new JFrame();
+        updateTitle(frame);
+        frame.setLayout(new BorderLayout());
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        return frame;
+    }
+
+    private void showFrame(JFrame frame) {
+        frame.pack();
+        frame.setVisible(true);
     }
 
     private JMenuBar createMenuBar() {
@@ -131,6 +142,12 @@ public class CSVTableInterface {
         JMenu editMenu = new JMenu("Edit");
         menuBar.add(editMenu);
 
+        // Create select all menu item
+        JMenuItem selectAllItem = new JMenuItem("Select all");
+        selectAllItem.setAccelerator(KeyStroke.getKeyStroke("meta A"));
+        selectAllItem.addActionListener(event -> jtable.selectAll());
+        editMenu.add(selectAllItem);
+
         // Create add row menu item
         JMenuItem addRowItem = new JMenuItem("Add row");
         addRowItem.addActionListener(event -> addRow());
@@ -154,34 +171,24 @@ public class CSVTableInterface {
     }
 
     private void addRow() {
-        DefaultTableModel model1 = (DefaultTableModel) jtable.getModel();
-        model1.addRow(new Object[]{});
+        CSVTableModel model = (CSVTableModel) jtable.getModel();
+        model.addRow();
+        // Select the new row
+        int lastRow = model.getRowCount() - 1;
+        jtable.setRowSelectionInterval(lastRow, lastRow);
     }
 
     private void deleteRow() {
         int selectedRow = jtable.getSelectedRow();
         if (selectedRow >= 0) {
-            DefaultTableModel model1 = (DefaultTableModel) jtable.getModel();
-            model1.removeRow(selectedRow);
+            CSVTableModel model = (CSVTableModel) jtable.getModel();
+            model.removeRow(selectedRow);
+            // Select the row above the deleted row
+            int newSelectedRow = selectedRow - 1;
+            if (newSelectedRow >= 0) {
+                jtable.setRowSelectionInterval(newSelectedRow, newSelectedRow);
+            }
         }
-    }
-
-    private JFrame createFrame() {
-        JFrame frame = new JFrame();
-        String title = "CSV Table Editor";
-        if (filename != null) {
-            title += " - " + new File(filename).getName();
-        }
-        frame.setTitle(title);
-        frame.setLayout(new BorderLayout());
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        return frame;
-    }
-
-    private void showFrame(JFrame frame) {
-        frame.pack();
-        frame.setVisible(true);
     }
 
     private void openFile() {
@@ -203,9 +210,22 @@ public class CSVTableInterface {
         try {
             CSVWriter writer = new CSVWriter(filename);
             writer.writeTable(table);
+            setSaved(true);
+            // Unselect all cells
+            jtable.clearSelection();
+            jtable.repaint();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private boolean isSaved() {
+        return isSaved;
+    }
+
+    private void setSaved(boolean isSaved) {
+        this.isSaved = isSaved;
+        updateTitle();
     }
 }
 

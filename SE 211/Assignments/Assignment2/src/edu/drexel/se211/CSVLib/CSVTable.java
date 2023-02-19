@@ -31,7 +31,7 @@ public class CSVTable {
     public ArrayList<CSVRow> getRows() {
         return rows;
     }
-    public int getRowCount() {
+    public int getRowSize() {
         return rows.size();
     }
     public CSVRow getRow(int index) {
@@ -52,13 +52,13 @@ public class CSVTable {
     }
     public void addRow(CSVRow row) {
         rows.add(row);
-        if (row.size() > longestRow) {
+        if (row.size() > getLongestRow()) {
             setLongestRow(row.size());
         }
     }
     public void setRow(int index, CSVRow row) {
         rows.set(index, row);
-        if (row.size() > longestRow) {
+        if (row.size() > getLongestRow()) {
             setLongestRow(row.size());
         }
     }
@@ -70,11 +70,13 @@ public class CSVTable {
         // Get the row to be removed
         CSVRow row = getRow(index);
         // If the row is the longest row, find the new longest row
-        if (row.size() == longestRow) {
-            setLongestRow(findLongestRow());
-        }
+        boolean isLongestRow = row.size() == getLongestRow();
         // Remove the row
         rows.remove(index);
+        // If the row was the longest row, find the new longest row
+        if (isLongestRow) {
+            setLongestRow(findLongestRow());
+        }
     }
     public void removeRow(CSVRow row) {
         removeRow(rows.indexOf(row));
@@ -109,23 +111,11 @@ public class CSVTable {
     public void setHeaders(ArrayList<String> headers) {
         this.headers = new CSVRow(headers);
     }
-    public int getHeaderCount() {
+    public int getHeaderSize() {
         return headers.size();
     }
     private int getHeaderIndex(String header) {
         return headers.getCells().indexOf(header);
-    }
-    private int getHeaderIndex(String header, boolean ignoreCase) {
-        if (ignoreCase) {
-            for (int i = 0; i < headers.size(); i++) {
-                if (headers.getCell(i).equalsIgnoreCase(header)) {
-                    return i;
-                }
-            }
-            return -1;
-        } else {
-            return getHeaderIndex(header);
-        }
     }
 
     public void print() {
@@ -138,8 +128,8 @@ public class CSVTable {
     }
 
     public String[][] to2DArray() {
-        String[][] data = new String[getRowCount()][getLongestRow()];
-        for (int i = 0; i < getRowCount(); i++) {
+        String[][] data = new String[getRowSize()][getLongestRow()];
+        for (int i = 0; i < getRowSize(); i++) {
             CSVRow row = getRow(i);
             for (int j = 0; j < getLongestRow(); j++) {
                 data[i][j] = row.getCell(j, "");

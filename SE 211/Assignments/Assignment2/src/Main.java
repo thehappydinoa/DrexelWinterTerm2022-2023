@@ -2,6 +2,11 @@ import edu.drexel.se211.CSVLib.ui.CSVFileSelector;
 
 import javax.swing.UIManager;
 
+/**
+ * The main class for the CSVLib application.
+ * 
+ * @author Aidan Holland (adh346)
+ */
 public class Main {
     public static void main(String[] args) {
         // Take the menu bar off the frame

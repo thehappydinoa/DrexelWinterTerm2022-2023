@@ -24,18 +24,27 @@ public class CSVWriter {
         this(new CSVParser(), new BufferedWriter(new FileWriter(selectedFile)));
     }
 
+    public void close() throws IOException {
+        writer.close();
+    }
+
     public void writeTable(CSVTable table) {
+    try {
+        CSVRow headers = table.getHeaders();
+        if (headers != null) {
+            writer.write(headers.toString(parser, table.getLongestRow()));
+        }
+        for (CSVRow row : table.getRows()) {
+            writer.write(row.toString(parser, table.getLongestRow()));
+        }
+    } catch (IOException e) {
+        System.out.println(e.getMessage());
+    } finally {
         try {
-            CSVRow headers = table.getHeaders();
-            if (headers != null) {
-                writer.write(headers.toString(parser, table.getLongestRow()));
-            }
-            for (CSVRow row : table.getRows()) {
-                writer.write(row.toString(parser, table.getLongestRow()));
-            }
-            writer.close();
+            close();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
+}
 }
